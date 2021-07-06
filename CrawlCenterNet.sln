@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrawlCenter.Web", "CrawlCenter.Web\CrawlCenter.Web.csproj", "{5A39D32B-26B4-4AA8-BD63-7A36A745DC34}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrawlCenter.Contrib", "CrawlCenter.Contrib\CrawlCenter.Contrib.csproj", "{AF6C299E-5B96-4F3C-9676-28F311653FAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrawlCenter.Data", "CrawlCenter.Data\CrawlCenter.Data.csproj", "{D1671771-6840-4500-B3BD-C564CD20BBF7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5A39D32B-26B4-4AA8-BD63-7A36A745DC34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A39D32B-26B4-4AA8-BD63-7A36A745DC34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A39D32B-26B4-4AA8-BD63-7A36A745DC34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A39D32B-26B4-4AA8-BD63-7A36A745DC34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF6C299E-5B96-4F3C-9676-28F311653FAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF6C299E-5B96-4F3C-9676-28F311653FAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF6C299E-5B96-4F3C-9676-28F311653FAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF6C299E-5B96-4F3C-9676-28F311653FAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1671771-6840-4500-B3BD-C564CD20BBF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1671771-6840-4500-B3BD-C564CD20BBF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1671771-6840-4500-B3BD-C564CD20BBF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1671771-6840-4500-B3BD-C564CD20BBF7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

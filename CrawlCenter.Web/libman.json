@@ -1,0 +1,23 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "provider": "unpkg",
+      "library": "bootstrap@4.6.0",
+      "destination": "wwwroot/lib/bootstrap/"
+    },
+    {
+      "library": "jquery@3.6.0",
+      "destination": "wwwroot/lib/jquery/"
+    },
+    {
+      "library": "feather-icons@4.28.0",
+      "destination": "wwwroot/lib/feather-icons"
+    },
+    {
+      "library": "Chart.js@3.4.0",
+      "destination": "wwwroot/lib/Chart.js"
+    }
+  ]
+}

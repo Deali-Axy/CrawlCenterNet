@@ -1,0 +1,11 @@
+.idea
+.vscode
+*.db
+bin/
+obj/
+/packages/
+riderModule.iml
+/_ReSharper.Caches/
+.fake
+.ionide
+CrawlCenter.Web/wwwroot/lib

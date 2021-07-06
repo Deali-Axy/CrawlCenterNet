@@ -1,0 +1,14 @@
+﻿@model IEnumerable<CrawlCenter.Data.Models.ConfigSection>
+
+
+<div class="card">
+    <div class="card-header">Section</div>
+    <div class="list-group list-group-flush" id="list-tab" role="tablist">
+        @foreach (var configSection in Model) {
+            <a class="list-group-item list-group-item-action" id="list-@configSection.Id-list"
+               data-toggle="list" href="#list-@configSection.Id" role="tab" aria-controls="@configSection.Id">
+                @configSection.Name
+            </a>
+        }
+    </div>
+</div>

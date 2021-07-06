@@ -1,0 +1,138 @@
+﻿@using CrawlCenter.Web.ToolKits
+
+@inject CrawlCenter.Contrib.WebMessages.Messages Messages
+
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.80.0">
+    <title>@ViewData["Title"] - CrawlCenter.Web</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.6/examples/dashboard/">
+
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+
+
+    <!-- Favicons -->
+    @* <link rel="apple-touch-icon" href="/docs/4.6/assets/img/favicons/apple-touch-icon.png" sizes="180x180"> *@
+    @* <link rel="icon" href="/docs/4.6/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png"> *@
+    @* <link rel="icon" href="/docs/4.6/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png"> *@
+    @* <link rel="manifest" href="/docs/4.6/assets/img/favicons/manifest.json"> *@
+    @* <link rel="mask-icon" href="/docs/4.6/assets/img/favicons/safari-pinned-tab.svg" color="#563d7c"> *@
+    @* <link rel="icon" href="/docs/4.6/assets/img/favicons/favicon.ico"> *@
+    @* <meta name="msapplication-config" content="/docs/4.6/assets/img/favicons/browserconfig.xml"> *@
+    <meta name="theme-color" content="#563d7c">
+
+    <!-- Custom styles for this template -->
+    <link href="~/css/dashboard.css" rel="stylesheet">
+</head>
+<body>
+
+
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+    <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" asp-controller="Home" asp-action="Index">可视化数据管理平台</a>
+    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu"
+            aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <input class="form-control form-control-dark w-75" type="text" placeholder="Search" aria-label="Search">
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+            <a class="nav-link" href="#">退出</a>
+        </li>
+    </ul>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+            <div class="sidebar-sticky pt-3">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link @RazorHelper.MenuHighlight(ViewContext, "Home")"
+                           asp-controller="Home" asp-action="Index">
+                            <span data-feather="home"></span>
+                            总览 @Html.Raw(RazorHelper.SrOnly(ViewContext, "Home"))
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @RazorHelper.MenuHighlight(ViewContext, "Crawl")"
+                           asp-controller="Crawl" asp-action="Index">
+                            <span data-feather="file"></span>
+                            数据采集 @Html.Raw(RazorHelper.SrOnly(ViewContext, "Crawl"))
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @RazorHelper.MenuHighlight(ViewContext, "TaskDashboard")"
+                           asp-controller="TaskDashboard" asp-action="Index">
+                            <span data-feather="shopping-cart"></span>
+                            任务面板 @Html.Raw(RazorHelper.SrOnly(ViewContext, "TaskDashboard"))
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @RazorHelper.MenuHighlight(ViewContext, "DataAnalysis")"
+                           asp-controller="DataAnalysis" asp-action="Index">
+                            <span data-feather="users"></span>
+                            数据分析 @Html.Raw(RazorHelper.SrOnly(ViewContext, "DataAnalysis"))
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @RazorHelper.MenuHighlight(ViewContext, "DataReport")"
+                           asp-controller="DataReport" asp-action="Index">
+                            <span data-feather="bar-chart-2"></span>
+                            数据报表 @Html.Raw(RazorHelper.SrOnly(ViewContext, "DataReport"))
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @RazorHelper.MenuHighlight(ViewContext, "Integration")" href="#">
+                            <span data-feather="layers"></span>
+                            系统集成 @Html.Raw(RazorHelper.SrOnly(ViewContext, "Integration"))
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @RazorHelper.MenuHighlight(ViewContext, "ConfigCenter")"
+                           asp-controller="ConfigCenter" asp-action="Index">
+                            <span data-feather="settings"></span>
+                            配置中心 @Html.Raw(RazorHelper.SrOnly(ViewContext, "ConfigCenter"))
+                        </a>
+                    </li>
+                </ul>
+
+                @await RenderSectionAsync("SideMenu", required: false)
+            </div>
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+            <div class="mt-3">
+                @if (!Messages.IsEmpty) {
+                    while (!Messages.IsEmpty) {
+                        var message = Messages.Dequeue();
+
+                        <div class="alert alert-@message.Tag" role="alert">
+                            @message.Content
+                        </div>
+                    }
+                }
+            </div>
+
+            @RenderBody()
+        </main>
+    </div>
+</div>
+
+
+<script src="~/lib/jquery/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/lib/feather-icons/feather.min.js"></script>
+<script src="~/lib/chart.js/Chart.min.js"></script>
+<script src="~/js/dashboard.js"></script>
+</body>
+</html>

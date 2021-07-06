@@ -1,0 +1,60 @@
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common
+@using CrawlCenter.Web.ToolKits
+@using CrawlCenter.Data.Models
+@model CrawlCenter.Web.ViewModels.Crawl.CrawlTaskIndexViewModel
+
+@{
+    ViewData["Title"] = "数据采集";
+}
+
+@section SideMenu {
+    <partial name="_SideMenu"/>
+}
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">
+        数据采集
+        @if (ViewBag.SelectedProjectName != null) {
+            @Html.Raw(" - ")
+            @ViewBag.SelectedProjectName
+        }
+    </h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <div class="dropdown">
+            <button class="btn btn-outline-secondary dropdown-toggle mr-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span data-feather="calendar"></span>
+                项目
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="?projectId=">全部</a>
+                @foreach (var project in Model.Projects) {
+                    <a class="dropdown-item" href="?projectId=@project.Id">@project.Name</a>
+                }
+            </div>
+        </div>
+        <div class="btn-group">
+            <a class="btn btn-outline-primary" asp-controller="Crawl" asp-action="Add">
+                <span data-feather="plus"></span>
+                新增
+            </a>
+            <button type="button" class="btn btn-outline-success">
+                <span data-feather="play"></span>
+                批量运行
+            </button>
+        </div>
+    </div>
+</div>
+
+@foreach (var crawlTask in Model.CrawlTasks) {
+    <partial name="Widgets/CrawlTaskCard" model="crawlTask"/>
+}
+
+@Html.PagedListPager((IPagedList) Model.CrawlTasks,
+    page => Url.Action(RazorHelper.GetCurrentActionName(ViewContext), new {page}),
+    new PagedListRenderOptions {
+        LiElementClasses = new[] {"page-item"},
+        PageClasses = new[] {"page-link"},
+        UlElementClasses = new[] {"pagination justify-content-center"}
+    })

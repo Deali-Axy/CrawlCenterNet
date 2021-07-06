@@ -1,0 +1,36 @@
+﻿@using CrawlCenter.Web.ToolKits
+
+<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+    <span>子菜单</span>
+    <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
+        <span data-feather="plus-circle"></span>
+    </a>
+</h6>
+<ul class="nav flex-column mb-2">
+    <li class="nav-item">
+        <a class="nav-link @RazorHelper.SideMenuHighlight(ViewContext, "Index")"
+           asp-controller="Crawl" asp-action="Index">
+            <span data-feather="file-text"></span>
+            总览
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link @RazorHelper.SideMenuHighlight(ViewContext, "Add")"
+           asp-controller="Crawl" asp-action="Add">
+            <span data-feather="file-text"></span>
+            添加爬虫
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link @RazorHelper.SideMenuHighlight(ViewContext, "Edit")" href="#">
+            <span data-feather="file-text"></span>
+            修改爬虫
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link @RazorHelper.SideMenuHighlight(ViewContext, "Details")" href="#">
+            <span data-feather="file-text"></span>
+            详情查看
+        </a>
+    </li>
+</ul>

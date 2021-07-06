@@ -1,0 +1,11 @@
+﻿@model IEnumerable<CrawlCenter.Data.Models.ConfigSection>
+
+
+<div class="tab-content" id="nav-tabContent">
+    @foreach (var configSection in Model) {
+        <div class="tab-pane fade" id="list-@configSection.Id" role="@configSection.Id"
+             aria-labelledby="list-@configSection.Id-list">
+            <partial name="Widgets/SectionDetailsCard" model="configSection"/>
+        </div>
+    }
+</div>

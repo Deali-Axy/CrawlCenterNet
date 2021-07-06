@@ -1,0 +1,51 @@
+﻿@model CrawlCenter.Data.Models.CrawlTask
+
+<div class="card mb-3">
+    <div class="card-header d-flex justify-content-between">
+        <div>
+            <b>@Model.DisplayName</b>
+        </div>
+        <div class="text-primary">@Model.Id.ToString()</div>
+    </div>
+    <div class="card-body">
+        <div class="card-title">爬虫名称：@Model.Name</div>
+        <div class="card-title">所属项目：@Model.Project.Name</div>
+        <div class="card-title">执行命令：@Model.Cmd</div>
+
+        <div class="btn-toolbar">
+            <a class="btn btn-sm btn-outline-primary m-1"
+               asp-controller="Crawl" asp-action="Details" asp-route-id="@Model.Id">
+                <span data-feather="file-text"></span>
+                详情
+            </a>
+
+            <a class="btn btn-sm btn-outline-success m-1"
+               asp-controller="Crawl" asp-action="Run" asp-route-id="@Model.Id">
+                <span data-feather="play"></span>
+                运行
+            </a>
+
+            <a type="button" class="btn btn-sm btn-outline-danger m-1"
+               asp-controller="Crawl" asp-action="Delete">
+                <span data-feather="trash"></span>
+                删除
+            </a>
+
+            <a class="btn btn-sm btn-outline-info m-1"
+               asp-controller="Crawl" asp-action="Edit" asp-route-id="@Model.Id">
+                <span data-feather="edit-3"></span>
+                编辑
+            </a>
+
+            <button type="button" class="btn btn-sm btn-outline-secondary m-1">
+                <span data-feather="copy"></span>
+                复制
+            </button>
+
+            <button type="button" class="btn btn-sm btn-outline-warning m-1">
+                <span data-feather="activity"></span>
+                最近任务
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,12 @@
+﻿@model CrawlCenter.Data.Models.CrawlTask
+
+@{
+    ViewData["Title"] = "爬虫详情 - 数据采集";
+}
+
+@section SideMenu {
+    <partial name="_SideMenu" />
+}
+
+
+<partial name="Widgets/CrawlTaskCard" model="Model" />
