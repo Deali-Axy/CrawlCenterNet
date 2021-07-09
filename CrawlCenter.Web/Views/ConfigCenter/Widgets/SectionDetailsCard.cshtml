@@ -1,12 +1,21 @@
-﻿@model CrawlCenter.Data.Models.ConfigSection 
-@{
-    var configSection = Model;
-}
+﻿@model CrawlCenter.Data.Models.ConfigSection
 
-<div class="card">
+<div class="btn-toolbar mb-2 mb-md-0">
+    <a class="btn btn-outline-danger m-1" asp-controller="ConfigCenter" asp-action="Delete" asp-route-sectionId="@Model.Id">
+        <span data-feather="trash"></span>
+        删除
+    </a>
+
+    <a class="btn btn-outline-info m-1" asp-controller="ConfigCenter" asp-action="Edit" asp-route-id="@Model.Id">
+        <span data-feather="edit-3"></span>
+        编辑
+    </a>
+</div>
+
+<div class="card mt-3">
     <div class="card-header d-flex justify-content-between">
-        <div>节点信息</div>
-        <div class="text-primary">@configSection.Id</div>
+        <div><span data-feather="info" class="mr-1"></span>节点信息</div>
+        <div class="text-primary">@Model.Id</div>
     </div>
     <div class="card-body">
         <form asp-controller="ConfigCenter" asp-action="Edit" method="post">
@@ -27,55 +36,15 @@
                     <span class="text-danger" asp-validation-for="Description"></span>
                 </div>
             </div>
-            <a class="btn btn-outline-info" asp-controller="ConfigCenter" asp-action="Edit" asp-route-id="@Model.Id">进入修改</a>
-            <button type="submit" class="btn btn-outline-primary">快速修改保存</button>
+            <button type="submit" class="btn btn-outline-primary">
+                <span data-feather="save"></span>
+                快速保存
+            </button>
         </form>
     </div>
 </div>
 
-<div class="card mt-3">
-    <div class="card-header">keys list</div>
-    @if (configSection.KeyValues.Count == 0) {
-        <div class="card-body">
-            <div class="alert alert-warning" role="alert">
-                该节点下没有配置键！
-            </div>
-        </div>
-    }
-    <form>
-        <div class="list-group list-group-flush">
-            @foreach (var (_, key) in configSection.KeyValues) {
-                <div class="list-group-item">
-
-                    <div class="form-row mb-2">
-                        <div class="col">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
-                                </div>
-                                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" value="@key.Name">
-                            </div>
-                        </div>
-                        <div class="col-10">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="inputGroup-sizing-default">说明</span>
-                                </div>
-                                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" value="@key.Description">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="inputGroup-sizing-default">Value</span>
-                        </div>
-                        <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" value="@key.Value">
-                    </div>
-                </div>
-            }
-        </div>
-        <div class="card-footer">
-            <button type="submit" class="btn btn-outline-info">保存配置</button>
-        </div>
-    </form>
-</div>
+@{
+    ViewData["ConfigSection"] = Model;
+}
+<partial name="Widgets/KeyListCard" model="Model.KeyValues" view-data="ViewData"/>

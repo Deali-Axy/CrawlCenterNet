@@ -1,0 +1,89 @@
+﻿@model IDictionary<string, CrawlCenter.Data.Models.ConfigKey>
+@using CrawlCenter.Data.Models
+@{
+    var configSection = (ConfigSection) ViewData["ConfigSection"];
+}
+
+<div class="card mt-3 mb-3">
+    <div class="card-header d-flex justify-content-between">
+        <div>
+            <span data-feather="list" class="mr-1"></span>keys list
+        </div>
+        <div class="btn-toolbar">
+            <a class="btn btn-sm btn-primary" asp-controller="ConfigCenter" asp-action="AddKey" asp-route-sectionId="@configSection.Id">
+                添加Key
+            </a>
+        </div>
+    </div>
+    @if (Model.Count == 0) {
+        <div class="card-body">
+            <div class="alert alert-warning" role="alert">
+                该节点下没有配置键！
+            </div>
+        </div>
+    }
+    <form asp-controller="ConfigCenter" asp-action="UpdateKeys">
+        <input type="hidden" name="sectionId" value="@configSection.Id">
+
+        <div class="list-group list-group-flush">
+            @{
+                var keyList = Model.ToList();
+            }
+            @for (var i = 0; i < keyList.Count; i++) {
+                var key = keyList[i].Value;
+
+                <input type="hidden" name="[@i].Id" value="@key.Id">
+
+                <div class="list-group-item">
+                    <div class="row">
+                        <div class="col-11">
+                            <div class="form-row mb-2">
+                                <div class="col">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="key-name-input-@i">Name</span>
+                                        </div>
+                                        <input type="text" class="form-control" aria-label="Default" aria-describedby="key-name-input-@i"
+                                               name="[@i].Name" value="@key.Name">
+                                    </div>
+                                </div>
+                                <div class="col-10">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="key-description-input-@i">说明</span>
+                                        </div>
+                                        <input type="text" class="form-control" aria-label="Default" aria-describedby="key-description-input-@i"
+                                               name="[@i].Description" value="@key.Description">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="key-value-input-@i">Value</span>
+                                </div>
+                                <input type="text" class="form-control" aria-label="Default" aria-describedby="key-value-input-@i"
+                                       name="[@i].Value" value="@key.Value">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <a class="btn btn-sm btn-danger" asp-controller="ConfigCenter" asp-action="DeleteKey"
+                               asp-route-sectionId="@configSection.Id" asp-route-keyId="@key.Id">
+                                <span data-feather="trash"></span>
+                                删除
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        @if (Model.Count > 0) {
+            <div class="card-footer">
+                <button type="submit" class="btn btn-outline-info">
+                    <span data-feather="save"></span>
+                    保存配置
+                </button>
+            </div>
+        }
+    </form>
+</div>

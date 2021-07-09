@@ -37,6 +37,7 @@
       <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\dist\jquery.js" />
       <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\dist\jquery.min.js" />
       <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\dist\jquery.min.map" />
+      <_ContentIncludedByDefault Remove="Views\Shared\Widgets\CrawlTaskCard.cshtml" />
     </ItemGroup>
 
     <ItemGroup>

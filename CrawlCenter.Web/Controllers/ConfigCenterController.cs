@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using CrawlCenter.Contrib.WebMessages;
 using CrawlCenter.Data.Models;
 using CrawlCenter.Data.Repositories;
@@ -67,18 +68,64 @@ namespace CrawlCenter.Web.Controllers {
             return RedirectToAction(nameof(Index));
         }
 
-        public void Test() {
-            _configRepo.Insert(new ConfigSection {
-                Id = Guid.NewGuid().ToString(),
-                Name = "测试配置",
-                Description = "反正测试就对了",
-                KeyValues = new Dictionary<string, ConfigKey> {
-                    {"cookie", new ConfigKey {Name = "cookie", Value = "123"}},
-                    {"cookie1", new ConfigKey {Name = "cookie1", Value = "1234"}},
-                    {"cookie2", new ConfigKey {Name = "cookie2", Value = "1235"}},
-                    {"cookie3", new ConfigKey {Name = "cookie3", Value = "12367"}}
-                }
-            });
+        public IActionResult Delete(string sectionId) {
+            var section = _configRepo.GetById(sectionId);
+            if (section == null) {
+                _messages.Error($"节点 {sectionId} 不存在！");
+                return RedirectToAction(nameof(Index));
+            }
+
+            _configRepo.Delete(sectionId);
+            _messages.Success($"删除节点 {sectionId} 成功！");
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public IActionResult AddKey(string sectionId) {
+            ViewBag.SectionId = sectionId;
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddKey(string sectionId, ConfigKey configKey) {
+            ViewBag.SectionId = sectionId;
+            if (!ModelState.IsValid) return View();
+
+            var section = _configRepo.GetById(sectionId);
+            section.KeyValues.Add(configKey.Name, configKey);
+            _configRepo.Update(section);
+
+            _messages.Success($"在 {section.Name} 中添加新Key成功！");
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public IActionResult UpdateKeys(string sectionId, IEnumerable<ConfigKey> keys) {
+            var form = HttpContext.Request.Form;
+
+            var section = _configRepo.GetById(sectionId);
+            section.KeyValues = keys.ToDictionary(key => key.Name);
+            _configRepo.Update(section);
+            _messages.Success($"更新 {section.Name} 的Key列表成功！");
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult DeleteKey(string sectionId, string keyId) {
+            var section = _configRepo.GetById(sectionId);
+            if (section == null) {
+                _messages.Error($"节点 {sectionId} 不存在！");
+                return RedirectToAction(nameof(Index));
+            }
+
+            if (!section.KeyValues.ContainsKey(keyId)) {
+                _messages.Error($"节点 {sectionId} 不存在ID为 {keyId} 的Key！");
+                return RedirectToAction(nameof(Index));
+            }
+            section.KeyValues.Remove(keyId);
+            _configRepo.Update(section);
+            _messages.Success($"删除节点 {sectionId} 下的 {keyId} key成功！");
+            
+            return RedirectToAction(nameof(Index));
         }
     }
 }

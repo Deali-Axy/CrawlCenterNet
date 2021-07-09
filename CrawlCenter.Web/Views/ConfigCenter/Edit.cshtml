@@ -14,7 +14,7 @@
 
 <div class="card">
     <div class="card-header d-flex justify-content-between">
-        <div>节点信息</div>
+        <div><span data-feather="info" class="mr-1"></span>节点信息</div>
         <div class="text-primary">@Model.Id</div>
     </div>
     <div class="card-body">
@@ -36,8 +36,12 @@
                     <span class="text-danger" asp-validation-for="Description"></span>
                 </div>
             </div>
-            <button type="submit" class="btn btn-outline-primary">保存</button>
-            <button type="button" class="btn btn-outline-warning" onclick="history.back()">取消</button>
+            <button type="submit" class="btn btn-outline-primary">
+                <span data-feather="save"></span>保存
+            </button>
+            <button type="button" class="btn btn-outline-warning" onclick="history.back()">
+                <span data-feather="x-circle"></span>取消
+            </button>
         </form>
     </div>
 </div>
