@@ -40,8 +40,4 @@
       <_ContentIncludedByDefault Remove="Views\Shared\Widgets\CrawlTaskCard.cshtml" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Views\Project" />
-    </ItemGroup>
-
 </Project>

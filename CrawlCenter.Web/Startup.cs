@@ -59,11 +59,13 @@ namespace CrawlCenter.Web {
             services.Configure<MongoDBSettings>(_configuration.GetSection(nameof(MongoDBSettings)));
             services.AddSingleton<MongoDBSettings>(sp =>
                 sp.GetRequiredService<IOptions<MongoDBSettings>>().Value);
+
+            services.AddExceptionless(_configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
-            app.UseExceptionless(_configuration);
+            app.UseExceptionless();
             app.UseMiddleware<PrintRequestMiddleware>();
 
             if (env.IsDevelopment()) {

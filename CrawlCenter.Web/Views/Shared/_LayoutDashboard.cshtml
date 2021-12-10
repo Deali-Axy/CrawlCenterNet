@@ -43,7 +43,7 @@
         <span class="navbar-toggler-icon"></span>
     </button>
 
-    <input class="form-control form-control-dark w-75" type="text" placeholder="Search" aria-label="Search">
+    @* <input class="form-control form-control-dark w-75" type="text" placeholder="Search" aria-label="Search"> *@
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
             <a class="nav-link" href="#">退出</a>
@@ -68,6 +68,13 @@
                            asp-controller="Crawl" asp-action="Index">
                             <span data-feather="file"></span>
                             数据采集 @Html.Raw(RazorHelper.SrOnly(ViewContext, "Crawl"))
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @RazorHelper.MenuHighlight(ViewContext, "Project")"
+                           asp-controller="Project" asp-action="Index">
+                            <span data-feather="file"></span>
+                            项目管理 @Html.Raw(RazorHelper.SrOnly(ViewContext, "Project"))
                         </a>
                     </li>
                     <li class="nav-item">

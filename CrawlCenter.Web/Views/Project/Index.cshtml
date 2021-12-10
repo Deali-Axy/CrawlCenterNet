@@ -1,0 +1,22 @@
+﻿@model CrawlCenter.Web.ViewModels.Projects.ProjectIndexViewModel
+
+
+@{
+    ViewData["Title"] = "项目管理";
+}
+
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">
+        项目管理（数量：@Model.Projects.Count()）
+    </h1>
+</div>
+
+@foreach (var project in Model.Projects) {
+    <div class="card mt-3">
+        <div class="card-header">@project.Name</div>
+        <div class="card-body">
+            <div class="card-title">Description: @project.Description</div>
+        </div>
+    </div>
+}
