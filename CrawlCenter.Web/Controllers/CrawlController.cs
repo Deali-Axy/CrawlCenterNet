@@ -61,18 +61,18 @@ namespace CrawlCenter.Web.Controllers {
         }
 
         [HttpPost]
-        public IActionResult Add(CrawlTaskCreateViewModel crawlTask) {
+        public IActionResult Add(CrawlTaskCreateViewModel viewModel) {
             ViewBag.Projects = ProjectSelectList;
 
             if (!ModelState.IsValid) return View();
 
             var newTask = new CrawlTask {
                 Id = Guid.NewGuid(),
-                Name = crawlTask.Name,
-                DisplayName = crawlTask.DisplayName,
-                Cmd = crawlTask.Cmd,
-                Description = crawlTask.Description,
-                ProjectId = crawlTask.ProjectId
+                Name = viewModel.Name,
+                DisplayName = viewModel.DisplayName,
+                Cmd = viewModel.Cmd,
+                Description = viewModel.Description,
+                ProjectId = viewModel.ProjectId
             };
             _crawlTaskRepo.Insert(newTask);
             _messages.Success("添加爬虫成功！");

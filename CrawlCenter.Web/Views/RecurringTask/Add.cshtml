@@ -1,0 +1,61 @@
+﻿@model CrawlCenter.Web.ViewModels.RecurringTasks.RecurringTaskCreateViewModel
+
+@{
+    ViewData["Title"] = "添加定时任务";
+}
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">添加定时任务</h1>
+</div>
+
+<form enctype="multipart/form-data" asp-controller="RecurringTask" asp-action="Add" method="post">
+    <div class="text-danger" asp-validation-summary="All"></div>
+
+    <div class="form-group row">
+        <label asp-for="Name" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Name" class="form-control"/>
+            <span class="text-danger" asp-validation-for="Name"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="Cron" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Cron" class="form-control"/>
+            <span class="text-danger" asp-validation-for="Cron"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="CrawlTaskId" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <select asp-for="CrawlTaskId" asp-items="ViewBag.CrawlTasks" class="custom-select mr-sm-2">
+                <option value="">未选择</option>
+            </select>
+            <span class="text-danger" asp-validation-for="CrawlTaskId"></span>
+        </div>
+    </div>
+    
+    <div class="form-group row">
+        <label asp-for="Parameters" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Parameters" class="form-control"/>
+            <span class="text-danger" asp-validation-for="Parameters"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="Description" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Description" class="form-control"/>
+            <span class="text-danger" asp-validation-for="Description"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <button type="reset" class="btn btn-info mr-2">重置</button>
+        <button type="submit" class="btn btn-primary mr-2">提交</button>
+        <button type="button" class="btn btn-warning" onclick="history.back()">取消</button>
+    </div>
+</form>

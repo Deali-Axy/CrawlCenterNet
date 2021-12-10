@@ -1,15 +1,13 @@
 ﻿using System;
+using CrawlCenter.Data.Models;
 
-namespace CrawlCenter.Data.Models {
-    /// <summary>
-    /// 定时任务
-    /// </summary>
-    public class RecurringTask : EntityBase {
+namespace CrawlCenter.Web.ViewModels.RecurringTasks {
+    public class RecurringTaskCreateViewModel {
         /// <summary>
         /// 定时任务名称
         /// </summary>
         public string Name { get; set; }
-
+        
         /// <summary>
         /// 爬虫
         /// </summary>

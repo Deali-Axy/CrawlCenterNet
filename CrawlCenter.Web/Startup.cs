@@ -47,6 +47,8 @@ namespace CrawlCenter.Web {
             services.AddExceptionless();
             services.AddSwagger();
 
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             // 添加消息框架
             services.AddSingleton<Messages>();
 

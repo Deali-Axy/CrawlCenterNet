@@ -9,13 +9,43 @@
     <h1 class="h2">
         定时任务（数量：@Model.RecurringTasks.Count()）
     </h1>
-</div>
-
-@foreach (var task in Model.RecurringTasks) {
-    <div class="card mt-3">
-        <div class="card-header">@task.Name</div>
-        <div class="card-body">
-            <div class="card-title">Description: @task.Description</div>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <div class="btn-group">
+            <a class="btn btn-outline-primary" asp-controller="RecurringTask" asp-action="Add">
+                <span data-feather="plus"></span>
+                新增
+            </a>
         </div>
     </div>
-}
+</div>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">#ID</th>
+        <th scope="col">任务名称</th>
+        <th scope="col">Cron</th>
+        <th scope="col">爬虫</th>
+        <th scope="col">参数</th>
+        <th scope="col">描述</th>
+        <th scope="col">启用/禁用</th>
+        <th scope="col">所有者</th>
+        <th scope="col">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var task in Model.RecurringTasks) {
+        <tr>
+            <th scope="row">@task.Id</th>
+            <td>@task.Name</td>
+            <td>@task.Cron</td>
+            <td>@task.CrawlTask.Name</td>
+            <td>@task.Parameters</td>
+            <td>@task.Description</td>
+            <td>@task.IsEnable</td>
+            <td>(default)</td>
+            <td>开发中</td>
+        </tr>
+    }
+    </tbody>
+</table>
