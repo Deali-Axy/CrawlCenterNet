@@ -1,17 +1,18 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
 using CrawlCenter.Data.Models;
+using CrawlCenter.Web.ViewModels.Projects;
 using CrawlCenter.Web.ViewModels.RecurringTasks;
 
 namespace CrawlCenter.Web.AutoMapper {
-    public class RecurringTaskProfile : Profile {
+    public class ProjectProfile : Profile {
         private readonly List<string> _unmapped = new List<string> {
-            "CrawlTask"
+            "CrawlTasks", "ProjectTags"
         };
 
-        public RecurringTaskProfile() {
-            CreateMap<RecurringTask, RecurringTaskCreateViewModel>();
-            CreateMap<RecurringTaskCreateViewModel, RecurringTask>();
+        public ProjectProfile() {
+            CreateMap<Project, ProjectCreateViewModel>();
+            CreateMap<ProjectCreateViewModel, Project>();
 
             ShouldMapProperty = (property => !_unmapped.Contains(property.Name));
         }

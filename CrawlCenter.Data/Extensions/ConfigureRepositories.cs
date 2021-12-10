@@ -8,9 +8,9 @@ namespace CrawlCenter.Data.Extensions {
         public static void AddRepositories(this IServiceCollection services) {
             services.AddScoped<IRepository<ConfigSection, string>, ConfigRepo>();
             services.AddScoped<IAppRepository<CrawlTask>, CrawlTaskRepo>();
-            services.AddScoped<IAppRepository<Project>, SqlRepository<Project>>();
+            services.AddScoped<IAppRepository<Project>, ProjectRepo>();
             services.AddScoped<IAppRepository<ProjectTag>, SqlRepository<ProjectTag>>();
-            services.AddScoped<IAppRepository<RecurringTask>, RecurringTaskRepository>();
+            services.AddScoped<IAppRepository<RecurringTask>, RecurringTaskRepo>();
             services.AddScoped<IAppRepository<User>, SqlRepository<User>>();
         }
     }
