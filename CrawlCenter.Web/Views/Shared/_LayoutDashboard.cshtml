@@ -64,6 +64,13 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link @RazorHelper.MenuHighlight(ViewContext, "Project")"
+                           asp-controller="Project" asp-action="Index">
+                            <span data-feather="file"></span>
+                            项目管理 @Html.Raw(RazorHelper.SrOnly(ViewContext, "Project"))
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link @RazorHelper.MenuHighlight(ViewContext, "Crawl")"
                            asp-controller="Crawl" asp-action="Index">
                             <span data-feather="file"></span>
@@ -71,10 +78,10 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link @RazorHelper.MenuHighlight(ViewContext, "Project")"
-                           asp-controller="Project" asp-action="Index">
+                        <a class="nav-link @RazorHelper.MenuHighlight(ViewContext, "RecurringTask")"
+                           asp-controller="RecurringTask" asp-action="Index">
                             <span data-feather="file"></span>
-                            项目管理 @Html.Raw(RazorHelper.SrOnly(ViewContext, "Project"))
+                            定时任务 @Html.Raw(RazorHelper.SrOnly(ViewContext, "RecurringTask"))
                         </a>
                     </li>
                     <li class="nav-item">

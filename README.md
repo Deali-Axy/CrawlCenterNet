@@ -9,6 +9,7 @@
 - MongoDB
 - Exceptionless
 - Hangfire
+- [Hangfire.Redis.StackExchange](https://github.com/marcoCasamento/Hangfire.Redis.StackExchange)
 - OpenApi
 - X.PagedList
 

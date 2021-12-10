@@ -10,6 +10,7 @@ namespace CrawlCenter.Data.Extensions {
             services.AddScoped<IAppRepository<CrawlTask>, CrawlTaskRepo>();
             services.AddScoped<IAppRepository<Project>, SqlRepository<Project>>();
             services.AddScoped<IAppRepository<ProjectTag>, SqlRepository<ProjectTag>>();
+            services.AddScoped<IAppRepository<RecurringTask>, SqlRepository<RecurringTask>>();
             services.AddScoped<IAppRepository<User>, SqlRepository<User>>();
         }
     }

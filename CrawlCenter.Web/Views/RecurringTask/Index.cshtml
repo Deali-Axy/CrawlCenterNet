@@ -1,0 +1,21 @@
+﻿@model CrawlCenter.Web.ViewModels.RecurringTasks.RecurringTaskIndexViewModel
+
+@{
+    ViewData["Title"] = "项目管理";
+}
+
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">
+        定时任务（数量：@Model.RecurringTasks.Count()）
+    </h1>
+</div>
+
+@foreach (var task in Model.RecurringTasks) {
+    <div class="card mt-3">
+        <div class="card-header">@task.Name</div>
+        <div class="card-body">
+            <div class="card-title">Description: @task.Description</div>
+        </div>
+    </div>
+}
