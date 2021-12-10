@@ -94,6 +94,7 @@ namespace CrawlCenter.Web.Controllers {
                 Id = crawlTask.Id,
                 Name = crawlTask.Name,
                 DisplayName = crawlTask.DisplayName,
+                CodeDir = crawlTask.CodeDir,
                 Cmd = crawlTask.Cmd,
                 Description = crawlTask.Description,
                 ProjectId = crawlTask.ProjectId
@@ -108,6 +109,7 @@ namespace CrawlCenter.Web.Controllers {
 
             var crawlTask = _crawlTaskRepo.GetById(model.Id);
             crawlTask.Name = model.Name;
+            crawlTask.CodeDir = model.CodeDir;
             crawlTask.Cmd = model.Cmd;
             crawlTask.Description = model.Description;
             crawlTask.DisplayName = model.DisplayName;

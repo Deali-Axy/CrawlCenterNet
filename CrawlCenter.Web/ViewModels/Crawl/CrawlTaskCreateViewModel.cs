@@ -32,6 +32,13 @@ namespace CrawlCenter.Web.ViewModels.Crawl {
         [Required(ErrorMessage = "请选择一个项目")]
         [Display(Name = "项目")]
         public Guid? ProjectId { get; set; }
+        
+        /// <summary>
+        /// 代码目录
+        /// </summary>
+        [Required(ErrorMessage = "代码目录不能为空")]
+        [Display(Name = "代码目录")]
+        public string CodeDir { get; set; }
 
         /// <summary>
         /// 执行命令

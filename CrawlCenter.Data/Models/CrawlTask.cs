@@ -2,6 +2,9 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace CrawlCenter.Data.Models {
+    /// <summary>
+    /// 爬虫任务
+    /// </summary>
     public class CrawlTask : EntityBase {
         /// <summary>
         /// 爬虫名称
@@ -23,7 +26,15 @@ namespace CrawlCenter.Data.Models {
         /// </summary>
         public Project Project { get; set; }
 
+        /// <summary>
+        /// 项目ID
+        /// </summary>
         public Guid? ProjectId { get; set; }
+
+        /// <summary>
+        /// 代码目录
+        /// </summary>
+        public string CodeDir { get; set; }
 
         /// <summary>
         /// 执行命令
