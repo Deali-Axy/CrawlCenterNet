@@ -10,6 +10,8 @@
         <PackageReference Include="FreeSql.Provider.Sqlite" Version="2.5.200" />
         <PackageReference Include="FreeSql.Repository" Version="2.5.200" />
         <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.16" />
-        <PackageReference Include="MongoDB.Driver" Version="2.12.4" />
+        <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
+        <PackageReference Include="MongoDB.Driver" Version="2.14.1" />
     </ItemGroup>
 </Project>

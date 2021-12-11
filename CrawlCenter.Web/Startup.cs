@@ -1,30 +1,18 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using CrawlCenter.Contrib.WebMessages;
-using CrawlCenter.Data;
 using CrawlCenter.Data.Extensions;
 using CrawlCenter.Data.Models;
-using CrawlCenter.Data.Repositories;
 using CrawlCenter.Web.Extensions;
 using CrawlCenter.Web.Middlewares;
 using Exceptionless;
-using FreeSql;
 using Hangfire;
-using Hangfire.MySql;
-using Hangfire.Storage.SQLite;
 using IGeekFan.AspNetCore.Knife4jUI;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
-using Microsoft.OpenApi.Models;
 
 namespace CrawlCenter.Web {
     public class Startup {
@@ -58,9 +46,8 @@ namespace CrawlCenter.Web {
             // 添加仓储
             services.AddRepositories();
 
-            services.Configure<MongoDBSettings>(_configuration.GetSection(nameof(MongoDBSettings)));
-            services.AddSingleton<MongoDBSettings>(sp =>
-                sp.GetRequiredService<IOptions<MongoDBSettings>>().Value);
+            // 添加MongoDB
+            services.AddMongoDB(_configuration);
 
             services.AddExceptionless(_configuration);
         }

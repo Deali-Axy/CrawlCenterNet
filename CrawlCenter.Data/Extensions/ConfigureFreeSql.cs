@@ -1,5 +1,4 @@
-﻿using CrawlCenter.Data;
-using FreeSql;
+﻿using FreeSql;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

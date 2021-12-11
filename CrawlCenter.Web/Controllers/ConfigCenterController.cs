@@ -9,6 +9,7 @@ using CrawlCenter.Web.ViewModels.ConfigCenter;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CrawlCenter.Web.Controllers {
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class ConfigCenterController : Controller {
         private readonly Messages _messages;
         private readonly IRepository<ConfigSection, string> _configRepo;

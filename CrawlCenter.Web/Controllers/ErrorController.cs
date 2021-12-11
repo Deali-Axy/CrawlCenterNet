@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace CrawlCenter.Web.Controllers {
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class ErrorController : Controller {
         private readonly ILogger<ErrorController> _logger;
 

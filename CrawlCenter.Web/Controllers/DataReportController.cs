@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 
 namespace CrawlCenter.Web.Controllers {
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class DataReportController : Controller {
         private readonly Messages _messages;
 

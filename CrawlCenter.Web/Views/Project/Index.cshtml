@@ -13,6 +13,14 @@
     <h1 class="h2">
         项目管理（数量：@Model.Projects.Count()）
     </h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <div class="btn-group">
+            <a class="btn btn-outline-primary" asp-controller="Project" asp-action="Add">
+                <span data-feather="plus"></span>
+                新增
+            </a>
+        </div>
+    </div>
 </div>
 
 @foreach (var project in Model.Projects) {

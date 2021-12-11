@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using X.PagedList;
 
 namespace CrawlCenter.Web.Controllers {
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class CrawlController : Controller {
         private readonly Messages _messages;
         private readonly IBackgroundJobClient _backgroundJobClient;

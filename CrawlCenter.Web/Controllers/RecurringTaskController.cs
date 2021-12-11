@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CrawlCenter.Web.Controllers {
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class RecurringTaskController : Controller {
         private readonly Messages _messages;
         private readonly IMapper _mapper;
