@@ -1,0 +1,21 @@
+﻿@model CrawlCenter.Data.Models.RecurringTask
+
+
+@{
+    ViewData["Title"] = "定时任务详情";
+}
+
+@section SideMenu {
+    <partial name="_SideMenu"/>
+}
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">定时任务详情</h1>
+</div>
+
+<div class="card">
+    <div class="card-header">@Model.Name</div>
+    <div class="card-body">
+        <div class="card-text">@Model.Description</div>
+    </div>
+</div>

@@ -6,6 +6,7 @@ using CrawlCenter.Contrib.WebMessages;
 using CrawlCenter.Data.Models;
 using CrawlCenter.Data.Repositories;
 using CrawlCenter.Web.ViewModels.RecurringTasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -39,6 +40,10 @@ namespace CrawlCenter.Web.Controllers {
             });
         }
 
+        public IActionResult Details(Guid id) {
+            return View(_recurringTaskRepo.GetById(id));
+        }
+
         [HttpGet]
         public IActionResult Add() {
             ViewBag.CrawlTasks = CrawlSelectList;
@@ -55,6 +60,44 @@ namespace CrawlCenter.Web.Controllers {
             _recurringTaskRepo.Insert(recurringTask);
             _messages.Success("添加定时任务成功！");
 
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public IActionResult Edit(Guid id) {
+            ViewBag.CrawlTasks = CrawlSelectList;
+            var task = _recurringTaskRepo.GetById(id);
+
+            if (task == null) {
+                Response.StatusCode = StatusCodes.Status404NotFound;
+                return View("Error");
+            }
+
+            return View(_mapper.Map<RecurringTaskEditViewModel>(task));
+        }
+
+        [HttpPost]
+        public IActionResult Edit(RecurringTaskEditViewModel viewModel) {
+            ViewBag.CrawlTasks = CrawlSelectList;
+            if (!ModelState.IsValid) return View();
+
+            var task = _mapper.Map<RecurringTask>(viewModel);
+            var affectRows = _recurringTaskRepo.Update(task);
+            if (affectRows > 0)
+                _messages.Success("修改定时任务成功！");
+            else
+                _messages.Error("修改定时任务失败！");
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public IActionResult Delete([FromForm] Guid id) {
+            var affectRows = _recurringTaskRepo.Delete(id);
+            if (affectRows > 0)
+                _messages.Success($"删除定时任务 {id} 成功！");
+            else
+                _messages.Error($"删除定时任务 {id} 失败！");
             return RedirectToAction(nameof(Index));
         }
     }

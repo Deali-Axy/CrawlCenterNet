@@ -4,6 +4,9 @@
     ViewData["Title"] = "项目管理";
 }
 
+@section SideMenu {
+    <partial name="_SideMenu"/>
+}
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2">
@@ -39,12 +42,29 @@
             <th scope="row">@task.Id</th>
             <td>@task.Name</td>
             <td>@task.Cron</td>
-            <td>@task.CrawlTask.Name</td>
+            <td>
+                <a class="card-link" asp-controller="Crawl" asp-action="Details" asp-route-id="@task.CrawlTask.Id">@task.CrawlTask.Name</a>
+            </td>
             <td>@task.Parameters</td>
             <td>@task.Description</td>
             <td>@task.IsEnable</td>
             <td>(default)</td>
-            <td>开发中</td>
+            <td>
+                <a class="btn btn-sm btn-outline-primary" title="详情"
+                   asp-controller="RecurringTask" asp-action="Details" asp-route-id="@task.Id">
+                    <span data-feather="file-text"></span>
+                </a>
+                <a class="btn btn-sm btn-outline-info" title="编辑"
+                   asp-controller="RecurringTask" asp-action="Edit" asp-route-id="@task.Id">
+                    <span data-feather="edit-3"></span>
+                </a>
+                <form asp-controller="RecurringTask" asp-action="Delete" method="post" style="display: inline-block">
+                    <input type="hidden" name="id" value="@task.Id">
+                    <button type="submit" class="btn btn-sm btn-outline-danger" title="删除" href="#">
+                        <span data-feather="trash"></span>
+                    </button>
+                </form>
+            </td>
         </tr>
     }
     </tbody>

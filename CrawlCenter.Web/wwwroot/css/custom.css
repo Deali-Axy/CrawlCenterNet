@@ -1,0 +1,7 @@
+﻿/* Bootstrap表格内容垂直居中，参考：https://blog.csdn.net/peng_hong_fu/article/details/70662979 */
+.table tbody tr td {
+    vertical-align: middle;
+}
+.table tbody tr th {
+    vertical-align: middle;
+}

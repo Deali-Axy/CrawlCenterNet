@@ -54,6 +54,10 @@ namespace CrawlCenter.Web.Controllers {
                 Projects = _projectRepo.GetAll()
             });
         }
+        
+        public IActionResult Details(Guid id) {
+            return View(_crawlTaskRepo.GetById(id));
+        }
 
         [HttpGet]
         public IActionResult Add() {
@@ -119,10 +123,6 @@ namespace CrawlCenter.Web.Controllers {
 
             _messages.Success("更新爬虫信息成功！");
             return RedirectToAction(nameof(Details), new {id = model.Id});
-        }
-
-        public IActionResult Details(Guid id) {
-            return View(_crawlTaskRepo.GetById(id));
         }
 
         public IActionResult Delete(Guid id) {

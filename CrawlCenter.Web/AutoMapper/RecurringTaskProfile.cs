@@ -12,6 +12,8 @@ namespace CrawlCenter.Web.AutoMapper {
         public RecurringTaskProfile() {
             CreateMap<RecurringTask, RecurringTaskCreateViewModel>();
             CreateMap<RecurringTaskCreateViewModel, RecurringTask>();
+            CreateMap<RecurringTask, RecurringTaskEditViewModel>();
+            CreateMap<RecurringTaskEditViewModel, RecurringTask>();
 
             ShouldMapProperty = (property => !_unmapped.Contains(property.Name));
         }
