@@ -16,6 +16,12 @@
 <div class="card">
     <div class="card-header">@Model.Name</div>
     <div class="card-body">
-        <div class="card-text">@Model.Description</div>
+        <div class="card-title">
+            爬虫：<a class="card-link" asp-controller="Crawl" asp-action="Details" asp-route-id="@Model.CrawlTask.Id">@Model.CrawlTask.Name</a>
+        </div>
+        <div class="card-title">Cron表达式：@Model.Cron</div>
+        <div class="card-title">参数：@Model.Parameters</div>
+        <div class="card-title">描述：@Model.Description</div>
+        <div class="card-title">是否启用：@Model.IsEnable</div>
     </div>
 </div>

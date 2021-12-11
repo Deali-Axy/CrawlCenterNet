@@ -17,10 +17,16 @@
     @if (Model.ShowStatusCode) {
         <p><strong>Status Code:</strong> <code>@Model.StatusCode</code></p>
     }
-    
     @if (Model.ShowRequestId) {
         <p><strong>Request ID:</strong> <code>@Model.RequestId</code></p>
     }
+    @if (Model.ShowPath) {
+        <p><strong>Path:</strong> <code>@Model.Path</code></p>
+    }
+    @if (Model.ShowQueryString) {
+        <p><strong>Query String:</strong> <code>@Model.QueryString</code></p>
+    }
+    
     <h3>Development Mode</h3>
     <p>
         Swapping to <strong>Development</strong> environment will display more detailed information about the error that occurred.

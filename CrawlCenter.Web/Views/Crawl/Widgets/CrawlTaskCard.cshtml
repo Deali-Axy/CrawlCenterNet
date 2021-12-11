@@ -25,11 +25,13 @@
                 运行
             </a>
 
-            <a class="btn btn-sm btn-outline-danger m-1"
-               asp-controller="Crawl" asp-action="Delete">
-                <span data-feather="trash"></span>
-                删除
-            </a>
+            <form class="form-inline-btn" asp-controller="Crawl" asp-action="Delete" method="post">
+                <input type="hidden" name="id" value="@Model.Id">
+                <button type="submit" class="btn btn-sm btn-outline-danger m-1">
+                    <span data-feather="trash"></span>
+                    删除
+                </button>
+            </form>
 
             <a class="btn btn-sm btn-outline-info m-1"
                asp-controller="Crawl" asp-action="Edit" asp-route-id="@Model.Id">

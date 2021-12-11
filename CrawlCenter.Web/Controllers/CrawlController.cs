@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using AutoMapper;
 using CrawlCenter.Contrib.WebMessages;
 using CrawlCenter.Data;
 using CrawlCenter.Data.Repositories;
 using CrawlCenter.Data.Models;
+using CrawlCenter.Data.Repositories.Impl;
+using CrawlCenter.Web.Tasks;
 using CrawlCenter.Web.ViewModels.Crawl;
 using Hangfire;
 using Microsoft.AspNetCore.Http;
@@ -16,18 +20,21 @@ using X.PagedList;
 namespace CrawlCenter.Web.Controllers {
     [ApiExplorerSettings(IgnoreApi = true)]
     public class CrawlController : Controller {
+        private readonly IMapper _mapper;
         private readonly Messages _messages;
         private readonly IBackgroundJobClient _backgroundJobClient;
         private readonly IAppRepository<CrawlTask> _crawlTaskRepo;
         private readonly IAppRepository<Project> _projectRepo;
         private readonly IAppRepository<ProjectTag> _projectTagRepo;
 
-        public CrawlController(Messages messages,
+        public CrawlController(IMapper mapper,
+            Messages messages,
             IBackgroundJobClient backgroundJobClient,
             IAppRepository<CrawlTask> crawlTaskRepo,
             IAppRepository<Project> projectRepo,
             IAppRepository<ProjectTag> projectTagRepo
         ) {
+            _mapper = mapper;
             _messages = messages;
             _backgroundJobClient = backgroundJobClient;
             _crawlTaskRepo = crawlTaskRepo;
@@ -43,18 +50,18 @@ namespace CrawlCenter.Web.Controllers {
 
         public IActionResult Index(string projectId = "", int page = 1, int pageSize = 5) {
             var crawlTasks = _crawlTaskRepo.GetAll();
-            
+
             if (!string.IsNullOrEmpty(projectId)) {
                 ViewBag.SelectedProjectName = _projectRepo.GetById(Guid.Parse(projectId)).Name;
                 crawlTasks = _crawlTaskRepo.GetAll().Where(a => a.ProjectId == Guid.Parse(projectId));
             }
-            
+
             return View(new CrawlTaskIndexViewModel {
                 CrawlTasks = crawlTasks.ToPagedList(page, pageSize),
                 Projects = _projectRepo.GetAll()
             });
         }
-        
+
         public IActionResult Details(Guid id) {
             return View(_crawlTaskRepo.GetById(id));
         }
@@ -71,17 +78,12 @@ namespace CrawlCenter.Web.Controllers {
 
             if (!ModelState.IsValid) return View();
 
-            var newTask = new CrawlTask {
-                Id = Guid.NewGuid(),
-                Name = viewModel.Name,
-                DisplayName = viewModel.DisplayName,
-                Cmd = viewModel.Cmd,
-                Description = viewModel.Description,
-                ProjectId = viewModel.ProjectId
-            };
+            var newTask = _mapper.Map<CrawlTask>(viewModel);
+            newTask.Id = Guid.NewGuid();
             _crawlTaskRepo.Insert(newTask);
             _messages.Success("添加爬虫成功！");
-            return RedirectToAction(nameof(Details), new {id = newTask.Id});
+            
+            return RedirectToAction(nameof(Details), new { id = newTask.Id });
         }
 
         [HttpGet]
@@ -95,49 +97,43 @@ namespace CrawlCenter.Web.Controllers {
                 return View("Error");
             }
 
-            return View(new CrawlTaskEditViewModel {
-                Id = crawlTask.Id,
-                Name = crawlTask.Name,
-                DisplayName = crawlTask.DisplayName,
-                CodeDir = crawlTask.CodeDir,
-                Cmd = crawlTask.Cmd,
-                Description = crawlTask.Description,
-                ProjectId = crawlTask.ProjectId
-            });
+            return View(_mapper.Map<CrawlTaskEditViewModel>(crawlTask));
         }
 
         [HttpPost]
         public IActionResult Edit(CrawlTaskEditViewModel model) {
             ViewBag.Projects = ProjectSelectList;
             if (!ModelState.IsValid) return View();
-
-
-            var crawlTask = _crawlTaskRepo.GetById(model.Id);
-            crawlTask.Name = model.Name;
-            crawlTask.CodeDir = model.CodeDir;
-            crawlTask.Cmd = model.Cmd;
-            crawlTask.Description = model.Description;
-            crawlTask.DisplayName = model.DisplayName;
-            crawlTask.ProjectId = model.ProjectId;
-            _crawlTaskRepo.Update(crawlTask);
+            
+            _crawlTaskRepo.Update(_mapper.Map<CrawlTask>(model));
 
             _messages.Success("更新爬虫信息成功！");
-            return RedirectToAction(nameof(Details), new {id = model.Id});
+            return RedirectToAction(nameof(Details), new { id = model.Id });
         }
 
-        public IActionResult Delete(Guid id) {
-            _messages.Error("没有删除权限！");
+        [HttpPost]
+        public IActionResult Delete([FromForm] Guid id, [FromServices] RecurringTaskRepo recurringTaskRepo) {
+            var recurringTaskDelete = recurringTaskRepo.BaseRepo
+                .Where(a => a.CrawlTaskId == id).ToDelete();
+            var affectRows = _crawlTaskRepo.Delete(id);
+            if (affectRows > 0) {
+                var affectRecurringTasks = recurringTaskDelete.ExecuteAffrows();
+                _messages.Success($"删除爬虫 {id} 成功，已删除关联的{affectRecurringTasks}个定时任务。");
+            }
+            else
+                _messages.Error($"删除爬虫 {id} 失败！");
+
             return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Run(Guid id) {
             var task = _crawlTaskRepo.GetById(id);
-            _backgroundJobClient.Enqueue(() => Console.WriteLine($"执行任务 {task.Name} 命令 {task.Cmd}"));
+            _backgroundJobClient.Enqueue(() => new RunCrawl().Run(task));
             // RecurringJob.AddOrUpdate(
             //     () => Console.WriteLine($"执行任务 {task.Name} 命令 {task.Cmd}"),
             //     Cron.Minutely);
             _messages.Info($"执行任务 {task.Name} 命令 {task.Cmd}");
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Details), new { id = task.Id });
         }
     }
 }

@@ -5,3 +5,8 @@
 .table tbody tr th {
     vertical-align: middle;
 }
+
+/* 把 POST Form 做成单个按钮 */
+.form-inline-btn{
+    display: inline-block;
+}

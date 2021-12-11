@@ -58,7 +58,7 @@
                    asp-controller="RecurringTask" asp-action="Edit" asp-route-id="@task.Id">
                     <span data-feather="edit-3"></span>
                 </a>
-                <form asp-controller="RecurringTask" asp-action="Delete" method="post" style="display: inline-block">
+                <form class="form-inline-btn" asp-controller="RecurringTask" asp-action="Delete" method="post">
                     <input type="hidden" name="id" value="@task.Id">
                     <button type="submit" class="btn btn-sm btn-outline-danger" title="删除" href="#">
                         <span data-feather="trash"></span>

@@ -9,5 +9,9 @@ namespace CrawlCenter.Web.ViewModels {
 
         public bool ShowStatusCode => StatusCode != null;
         public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+
+        public bool ShowPath => !string.IsNullOrEmpty(Path);
+
+        public bool ShowQueryString => !string.IsNullOrEmpty(QueryString);
     }
 }
