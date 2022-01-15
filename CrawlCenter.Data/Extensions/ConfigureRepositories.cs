@@ -7,6 +7,7 @@ namespace CrawlCenter.Data.Extensions {
     public static class ConfigureRepositories {
         public static void AddRepositories(this IServiceCollection services) {
             services.AddScoped<IRepository<ConfigSection, string>, ConfigRepo>();
+            services.AddScoped<ConfigRepo>();
             services.AddScoped<IAppRepository<CrawlTask>, CrawlTaskRepo>();
             services.AddScoped<IAppRepository<Project>, ProjectRepo>();
             services.AddScoped<IAppRepository<ProjectTag>, SqlRepository<ProjectTag>>();
