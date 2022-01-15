@@ -13,6 +13,10 @@ namespace CrawlCenter.Data.Repositories.Impl {
             _configSections = database.GetCollection<ConfigSection>(settings.ConfigCollectionName);
         }
 
+        public ConfigSection GetByName(string name) {
+            return _configSections.Find(a => a.Name == name).FirstOrDefault();
+        }
+
         public ConfigSection GetById(string id) {
             return _configSections.Find(a => a.Id == id).FirstOrDefault();
         }
