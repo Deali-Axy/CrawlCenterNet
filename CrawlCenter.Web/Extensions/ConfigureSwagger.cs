@@ -14,7 +14,7 @@ namespace CrawlCenter.Web.Extensions {
                 });
                 options.CustomOperationIds(apiDesc => {
                     var controllerAction = apiDesc.ActionDescriptor as ControllerActionDescriptor;
-                    return controllerAction?.ControllerName + "-" + controllerAction?.ActionName;
+                    return $"{controllerAction?.ControllerName}-{controllerAction?.ActionName}";
                 });
 
                 // 为 Swagger JSON and UI设置xml文档注释路径
