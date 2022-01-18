@@ -10,7 +10,7 @@ namespace CrawlCenter.Web.Extensions {
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "CrawlCenter.Web API V1", Version = "v1" });
                 options.AddServer(new OpenApiServer {
                     Url = "",
-                    Description = "vvv"
+                    Description = "v1"
                 });
                 options.CustomOperationIds(apiDesc => {
                     var controllerAction = apiDesc.ActionDescriptor as ControllerActionDescriptor;

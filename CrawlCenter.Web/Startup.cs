@@ -7,6 +7,7 @@ using CrawlCenter.Web.Middlewares;
 using Exceptionless;
 using Hangfire;
 using IGeekFan.AspNetCore.Knife4jUI;
+using IGeekFan.AspNetCore.RapiDoc;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -86,6 +87,13 @@ namespace CrawlCenter.Web {
             app.UseKnife4UI(c => {
                 c.RoutePrefix = "docs/knife4j";
                 c.SwaggerEndpoint("/v1/api-docs", "V1 Docs");
+            });
+            app.UseRapiDocUI(c => {
+                c.RoutePrefix = "docs/rapi";
+                c.SwaggerEndpoint("/v1/api-docs", "V1 Docs");
+                c.GenericRapiConfig = new GenericRapiConfig {
+                    Theme = "light"
+                };
             });
 
             app.UseEndpoints(endpoints => {
