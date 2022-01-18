@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrawlCenter.Data", "CrawlCe
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Spiders", "Spiders", "{1645C91F-94B7-4E87-919E-70A3D0DAC7AD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrawlCenter.Shared", "CrawlCenter.Shared\CrawlCenter.Shared.csproj", "{8DCA417E-98AA-48D2-875D-66CD80AFCFFF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +28,10 @@ Global
 		{D1671771-6840-4500-B3BD-C564CD20BBF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1671771-6840-4500-B3BD-C564CD20BBF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1671771-6840-4500-B3BD-C564CD20BBF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DCA417E-98AA-48D2-875D-66CD80AFCFFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DCA417E-98AA-48D2-875D-66CD80AFCFFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DCA417E-98AA-48D2-875D-66CD80AFCFFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DCA417E-98AA-48D2-875D-66CD80AFCFFF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection
