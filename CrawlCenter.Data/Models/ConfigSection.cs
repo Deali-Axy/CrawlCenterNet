@@ -13,5 +13,16 @@ namespace CrawlCenter.Data.Models {
 
         [BsonRepresentation(BsonType.Document)]
         public IDictionary<string, ConfigKey> KeyValues { get; set; } = new Dictionary<string, ConfigKey>();
+
+        [BsonIgnore]
+        public ConfigKey this[string name] {
+            get => KeyValues.ContainsKey(name) ? KeyValues[name] : null;
+            set {
+                if (KeyValues.ContainsKey(name))
+                    KeyValues[name] = value;
+                else
+                    KeyValues.Add(name, value);
+            }
+        }
     }
 }

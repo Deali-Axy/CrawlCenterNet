@@ -19,7 +19,7 @@ namespace CrawlCenter.Web {
         private readonly IConfiguration _configuration;
         private readonly IWebHostEnvironment _env;
 
-        public Startup(IConfiguration configuration,IWebHostEnvironment env) {
+        public Startup(IConfiguration configuration, IWebHostEnvironment env) {
             _configuration = configuration;
             _env = env;
         }
@@ -31,6 +31,7 @@ namespace CrawlCenter.Web {
                 // 添加Razor页面运行时动态编译支持
                 builder.AddRazorRuntimeCompilation();
             }
+
             services.AddHangfire(_configuration);
             services.AddExceptionless();
             services.AddSwagger();
@@ -42,7 +43,7 @@ namespace CrawlCenter.Web {
 
             // 添加FreeSQL
             services.AddFreeSql(_configuration);
-            
+
             // 添加仓储
             services.AddRepositories();
 
@@ -65,6 +66,7 @@ namespace CrawlCenter.Web {
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
             app.UseStatusCodePagesWithReExecute("/Error/StatusCode/{0}");
 
             // app.UseHttpsRedirection();
@@ -77,9 +79,12 @@ namespace CrawlCenter.Web {
             app.UseHangfireDashboard();
 
             app.UseSwagger();
-
+            app.UseSwaggerUI(c => {
+                c.RoutePrefix = "docs/swagger";
+                c.SwaggerEndpoint("/v1/api-docs", "V1 Docs");
+            });
             app.UseKnife4UI(c => {
-                c.RoutePrefix = "swagger";
+                c.RoutePrefix = "docs/knife4j";
                 c.SwaggerEndpoint("/v1/api-docs", "V1 Docs");
             });
 
