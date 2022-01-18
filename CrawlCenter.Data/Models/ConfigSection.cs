@@ -18,10 +18,16 @@ namespace CrawlCenter.Data.Models {
         public ConfigKey this[string name] {
             get => KeyValues.ContainsKey(name) ? KeyValues[name] : null;
             set {
-                if (KeyValues.ContainsKey(name))
-                    KeyValues[name] = value;
-                else
+                if (KeyValues.ContainsKey(name)) {
+                    KeyValues[name].Name = value.Name;
+                    KeyValues[name].Value = value.Value;
+                    if (value.Description != null) KeyValues[name].Description = value.Description;
+                }
+                else {
+                    // 生成递增ID
+                    value.Id = KeyValues.Count + 1;
                     KeyValues.Add(name, value);
+                }
             }
         }
     }
