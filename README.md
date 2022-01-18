@@ -13,6 +13,12 @@
 - OpenApi
 - X.PagedList
 
+
+## 第一版架构图
+
+![](docs/架构图v1.0.jpg)
+
+
 ## 运行效果
 
 ![](https://github.com/Deali-Axy/CrawlCenterNet/raw/master/screenshots/数据采集.png)
