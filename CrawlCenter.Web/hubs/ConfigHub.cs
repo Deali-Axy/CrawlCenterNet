@@ -13,9 +13,9 @@ namespace CrawlCenter.Web.hubs {
             _configRepo = configRepo;
         }
 
-        public string Get(string section, string key) {
+        public ConfigKey Get(string section, string key) {
             try {
-                return _configRepo.GetByName(section).KeyValues[key].Value;
+                return _configRepo[section][key];
             }
             catch (Exception ex) {
                 ex.ToExceptionless().Submit();
@@ -23,20 +23,12 @@ namespace CrawlCenter.Web.hubs {
             }
         }
 
-        public void Set(string section, string key, string value) {
+        public void Set(string sectionName, string key, string value) {
             try {
-                ConfigSection cfgSection = null;
-                cfgSection = _configRepo.GetByName(section);
-                if (cfgSection == null) {
-                    cfgSection = new ConfigSection { Name = section };
-                    _configRepo.Insert(cfgSection);
-                } 
-                if (cfgSection.KeyValues.ContainsKey(key)) {
-                    var cfgKey = cfgSection.KeyValues[key];
-                    cfgKey.Value = value;
-                }
-                else
-                    cfgSection.KeyValues.Add(key, new ConfigKey { Name = key, Value = value });
+                _configRepo[sectionName, key] = new ConfigKey {
+                    Name = key,
+                    Value = value
+                };
             }
             catch (Exception ex) {
                 ex.ToExceptionless().Submit();

@@ -122,10 +122,11 @@ namespace CrawlCenter.Web.Controllers {
                 _messages.Error($"节点 {sectionId} 不存在ID为 {keyId} 的Key！");
                 return RedirectToAction(nameof(Index));
             }
+
             section.KeyValues.Remove(keyId);
             _configRepo.Update(section);
             _messages.Success($"删除节点 {sectionId} 下的 {keyId} key成功！");
-            
+
             return RedirectToAction(nameof(Index));
         }
     }
