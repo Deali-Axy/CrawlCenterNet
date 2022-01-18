@@ -25,7 +25,7 @@ namespace CrawlCenter.Web.hubs {
 
         public void Set(string sectionName, string key, string value) {
             try {
-                _configRepo[sectionName][key] = new ConfigKey {
+                _configRepo[sectionName, key] = new ConfigKey {
                     Name = key,
                     Value = value
                 };
