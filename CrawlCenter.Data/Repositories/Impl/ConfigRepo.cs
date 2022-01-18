@@ -32,9 +32,8 @@ namespace CrawlCenter.Data.Repositories.Impl {
                     Insert(section);
                 }
                 else {
-                    var updateFlag = !section.KeyValues.ContainsKey(keyName);
                     section[keyName] = value;
-                    if (updateFlag) Update(section);
+                    Update(section);
                 }
             }
         }
