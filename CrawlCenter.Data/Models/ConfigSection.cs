@@ -3,31 +3,29 @@ using System.Collections.Generic;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace CrawlCenter.Data.Models {
-    public class ConfigSection {
-        [BsonId]
-        public string Id { get; set; }
+namespace CrawlCenter.Data.Models;
 
-        public string Name { get; set; }
-        public string Description { get; set; }
+public class ConfigSection {
+    [BsonId]
+    public string Id { get; set; }
 
-        [BsonRepresentation(BsonType.Document)]
-        public IDictionary<string, ConfigKey> KeyValues { get; set; } = new Dictionary<string, ConfigKey>();
+    public string Name { get; set; }
+    public string Description { get; set; }
 
-        [BsonIgnore]
-        public ConfigKey this[string name] {
-            get => KeyValues.ContainsKey(name) ? KeyValues[name] : null;
-            set {
-                if (KeyValues.ContainsKey(name)) {
-                    KeyValues[name].Name = value.Name;
-                    KeyValues[name].Value = value.Value;
-                    if (value.Description != null) KeyValues[name].Description = value.Description;
-                }
-                else {
-                    // 生成递增ID
-                    value.Id = KeyValues.Count + 1;
-                    KeyValues.Add(name, value);
-                }
+    [BsonRepresentation(BsonType.Document)]
+    public IDictionary<string, ConfigKey> KeyValues { get; set; } = new Dictionary<string, ConfigKey>();
+
+    [BsonIgnore]
+    public ConfigKey this[string name] {
+        get => KeyValues.ContainsKey(name) ? KeyValues[name] : null;
+        set {
+            if (KeyValues.ContainsKey(name)) {
+                KeyValues[name].Name = value.Name;
+                KeyValues[name].Value = value.Value;
+                if (value.Description != null) KeyValues[name].Description = value.Description;
+            }
+            else {
+                KeyValues.Add(name, value);
             }
         }
     }

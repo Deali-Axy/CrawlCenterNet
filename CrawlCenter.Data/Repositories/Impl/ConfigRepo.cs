@@ -67,12 +67,12 @@ namespace CrawlCenter.Data.Repositories.Impl {
 
         public int Update(ConfigSection obj) {
             var result = _collection.ReplaceOne(item => item.Id == obj.Id, obj);
-            return (int)result.ModifiedCount;
+            return (int) result.ModifiedCount;
         }
 
         public int Delete(string id) {
             var result = _collection.DeleteOne(a => a.Id == id);
-            return (int)result.DeletedCount;
+            return (int) result.DeletedCount;
         }
     }
 }
