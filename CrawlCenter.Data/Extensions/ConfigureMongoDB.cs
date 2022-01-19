@@ -6,9 +6,9 @@ using Microsoft.Extensions.Options;
 namespace CrawlCenter.Data.Extensions {
     public static class ConfigureMongoDB {
         public static void AddMongoDB(this IServiceCollection services, IConfiguration configuration) {
-            services.Configure<MongoDbSettings>(configuration.GetSection(nameof(MongoDbSettings)));
-            services.AddSingleton<MongoDbSettings>(sp =>
-                sp.GetRequiredService<IOptions<MongoDbSettings>>().Value);
+            services.Configure<MongodbSettings>(configuration.GetSection(nameof(MongodbSettings)));
+            services.AddSingleton<MongodbSettings>(sp =>
+                sp.GetRequiredService<IOptions<MongodbSettings>>().Value);
         }
     }
 }

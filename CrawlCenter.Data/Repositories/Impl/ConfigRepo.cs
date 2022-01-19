@@ -39,7 +39,7 @@ namespace CrawlCenter.Data.Repositories.Impl {
             }
         }
 
-        public ConfigRepo(MongoDbSettings settings) {
+        public ConfigRepo(MongodbSettings settings) {
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
             _collection = database.GetCollection<ConfigSection>(settings.ConfigCollectionName);
