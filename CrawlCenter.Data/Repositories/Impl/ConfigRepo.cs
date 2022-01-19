@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CrawlCenter.Data.Models;
+using CrawlCenter.Shared.Models;
 using MongoDB.Driver;
 
 namespace CrawlCenter.Data.Repositories.Impl {
@@ -38,7 +39,7 @@ namespace CrawlCenter.Data.Repositories.Impl {
             }
         }
 
-        public ConfigRepo(MongoDBSettings settings) {
+        public ConfigRepo(MongoDbSettings settings) {
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
             _collection = database.GetCollection<ConfigSection>(settings.ConfigCollectionName);
