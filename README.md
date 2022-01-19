@@ -21,11 +21,11 @@
 
 ## 运行效果
 
-![](https://github.com/Deali-Axy/CrawlCenterNet/raw/master/screenshots/数据采集.png)
+![](docs/screenshots/数据采集.png)
 
-![](https://github.com/Deali-Axy/CrawlCenterNet/raw/master/screenshots/配置中心.png)
+![](docs/screenshots/配置中心.png)
 
-![](https://github.com/Deali-Axy/CrawlCenterNet/raw/master/screenshots/任务面板.png)
+![](docs/screenshots/任务面板.png)
 
 
 
