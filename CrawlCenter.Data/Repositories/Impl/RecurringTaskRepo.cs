@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using CrawlCenter.Data.Models;
 
 namespace CrawlCenter.Data.Repositories.Impl {
-    public class RecurringTaskRepo : SqlRepository<RecurringTask> {
+    public class RecurringTaskRepo : BaseSqlRepo<RecurringTask> {
         public RecurringTaskRepo(IFreeSql freeSql) : base(freeSql) { }
 
         public override RecurringTask GetById(Guid id) {

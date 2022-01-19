@@ -6,8 +6,19 @@ using MongoDB.Driver;
 
 namespace CrawlCenter.Data.Repositories.Impl;
 
-public class ConfigRepo : IRepository<ConfigSection, string> {
-    private readonly IMongoCollection<ConfigSection> _collection;
+/// <summary>
+/// 配置中心仓库 实现基类
+/// </summary>
+public abstract class BaseConfigRepo : IRepository<ConfigSection, string> {
+    protected readonly MongoClient Client;
+    protected readonly IMongoDatabase Database;
+    protected IMongoCollection<ConfigSection> Collection;
+
+    protected BaseConfigRepo(MongodbSettings settings) {
+        Client = new MongoClient(settings.ConnectionString);
+        Database = Client.GetDatabase(settings.DatabaseName);
+        Collection = Database.GetCollection<ConfigSection>(settings.ConfigCollectionName);
+    }
 
     public ConfigSection this[string name] {
         get => GetByName(name);
@@ -40,40 +51,34 @@ public class ConfigRepo : IRepository<ConfigSection, string> {
         }
     }
 
-    public ConfigRepo(MongodbSettings settings) {
-        var client = new MongoClient(settings.ConnectionString);
-        var database = client.GetDatabase(settings.DatabaseName);
-        _collection = database.GetCollection<ConfigSection>(settings.ConfigCollectionName);
-    }
-
     public bool HasSection(string name) {
         return GetByName(name) != null;
     }
 
     public ConfigSection GetByName(string name) {
-        return _collection.Find(a => a.Name == name).FirstOrDefault();
+        return Collection.Find(a => a.Name == name).FirstOrDefault();
     }
 
     public ConfigSection GetById(string id) {
-        return _collection.Find(a => a.Id == id).FirstOrDefault();
+        return Collection.Find(a => a.Id == id).FirstOrDefault();
     }
 
     public IEnumerable<ConfigSection> GetAll() {
-        return _collection.Find(a => true).ToList();
+        return Collection.Find(a => true).ToList();
     }
 
     public int Insert(ConfigSection obj) {
-        _collection.InsertOne(obj);
+        Collection.InsertOne(obj);
         return 1;
     }
 
     public int Update(ConfigSection obj) {
-        var result = _collection.ReplaceOne(item => item.Id == obj.Id, obj);
-        return (int)result.ModifiedCount;
+        var result = Collection.ReplaceOne(item => item.Id == obj.Id, obj);
+        return (int) result.ModifiedCount;
     }
 
     public int Delete(string id) {
-        var result = _collection.DeleteOne(a => a.Id == id);
-        return (int)result.DeletedCount;
+        var result = Collection.DeleteOne(a => a.Id == id);
+        return (int) result.DeletedCount;
     }
 }

@@ -14,9 +14,9 @@ namespace CrawlCenter.Web.Apis.ConfigCenter;
 [ApiController]
 [Route("Api/Config/Common")]
 public class CommonConfigController : ControllerBase {
-    private readonly ConfigRepo _configRepo;
+    private readonly CommonConfigRepo _configRepo;
 
-    public CommonConfigController(ConfigRepo configRepo) {
+    public CommonConfigController(CommonConfigRepo configRepo) {
         _configRepo = configRepo;
     }
 

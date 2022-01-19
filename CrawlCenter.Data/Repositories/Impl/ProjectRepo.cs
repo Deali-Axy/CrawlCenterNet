@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using CrawlCenter.Data.Models;
 
 namespace CrawlCenter.Data.Repositories.Impl {
-    public class ProjectRepo : SqlRepository<Project> {
+    public class ProjectRepo : BaseSqlRepo<Project> {
         public ProjectRepo(IFreeSql freeSql) : base(freeSql) { }
 
         public override Project GetById(Guid id) {

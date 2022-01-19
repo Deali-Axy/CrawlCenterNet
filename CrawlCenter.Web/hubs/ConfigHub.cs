@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace CrawlCenter.Web.hubs {
     public class ConfigHub : Hub {
-        private readonly ConfigRepo _configRepo;
+        private readonly BaseConfigRepo _configRepo;
 
-        public ConfigHub(ConfigRepo configRepo) {
+        public ConfigHub(BaseConfigRepo configRepo) {
             _configRepo = configRepo;
         }
 

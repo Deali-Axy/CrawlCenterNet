@@ -4,12 +4,12 @@ using CrawlCenter.Data.Models;
 using FreeSql;
 
 namespace CrawlCenter.Data.Repositories.Impl {
-    public class SqlRepository<T> : IAppRepository<T> where T : EntityBase {
+    public class BaseSqlRepo<T> : IAppRepository<T> where T : EntityBase {
         public IFreeSql FreeSql { get; }
 
         public IBaseRepository<T> BaseRepo => FreeSql.GetRepository<T>();
 
-        public SqlRepository(IFreeSql freeSql) {
+        public BaseSqlRepo(IFreeSql freeSql) {
             FreeSql = freeSql;
         }
 
