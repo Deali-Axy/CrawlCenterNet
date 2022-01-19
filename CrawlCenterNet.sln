@@ -6,8 +6,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrawlCenter.Contrib", "Craw
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrawlCenter.Data", "CrawlCenter.Data\CrawlCenter.Data.csproj", "{D1671771-6840-4500-B3BD-C564CD20BBF7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Spiders", "Spiders", "{1645C91F-94B7-4E87-919E-70A3D0DAC7AD}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrawlCenter.Shared", "CrawlCenter.Shared\CrawlCenter.Shared.csproj", "{8DCA417E-98AA-48D2-875D-66CD80AFCFFF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{5A14C505-936B-4773-ADDC-E213797E5661}"
