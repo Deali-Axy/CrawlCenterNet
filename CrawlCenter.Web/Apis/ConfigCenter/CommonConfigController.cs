@@ -32,11 +32,11 @@ public class CommonConfigController : ControllerBase {
     /// <summary>
     /// 获取配置节点
     /// </summary>
-    /// <param name="sectionId"></param>
+    /// <param name="sectionName"></param>
     /// <returns></returns>
-    [HttpGet("Rest/{sectionId}")]
-    public ActionResult<ConfigSection> GetSection(string sectionId) {
-        var sectionObj = _configRepo[sectionId];
+    [HttpGet("Rest/{sectionName}")]
+    public ActionResult<ConfigSection> GetSection(string sectionName) {
+        var sectionObj = _configRepo[sectionName];
         if (sectionObj == null) return NotFound();
         return sectionObj;
     }
