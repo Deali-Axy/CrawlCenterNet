@@ -12,4 +12,5 @@ public class Collections {
     public string CommonConfig { get; set; }
     public string ProjectConfig { get; set; }
     public string CrawlTaskConfig { get; set; }
+    public string CrawlEnvVar { get; set; }
 }

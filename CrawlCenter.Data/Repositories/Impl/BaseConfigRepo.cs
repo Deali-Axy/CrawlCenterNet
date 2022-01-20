@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using CrawlCenter.Data.Models;
 using CrawlCenter.Shared.Models;
+using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
 namespace CrawlCenter.Data.Repositories.Impl;
@@ -13,11 +14,13 @@ public abstract class BaseConfigRepo : IRepository<ConfigSection, string> {
     protected readonly MongoClient Client;
     protected readonly IMongoDatabase Database;
     protected IMongoCollection<ConfigSection> Collection;
+    protected MongodbSettings MongodbSettings;
 
-    protected BaseConfigRepo(MongodbSettings settings) {
-        Client = new MongoClient(settings.ConnectionString);
-        Database = Client.GetDatabase(settings.DatabaseName);
-        Collection = Database.GetCollection<ConfigSection>(settings.ConfigCollectionName);
+    protected BaseConfigRepo(IOptions<MongodbSettings> options) {
+        MongodbSettings = options.Value;
+        Client = new MongoClient(MongodbSettings.ConnectionString);
+        Database = Client.GetDatabase(MongodbSettings.DatabaseName);
+        Collection = Database.GetCollection<ConfigSection>(MongodbSettings.ConfigCollectionName);
     }
 
     public ConfigSection this[string name] {
@@ -74,11 +77,11 @@ public abstract class BaseConfigRepo : IRepository<ConfigSection, string> {
 
     public int Update(ConfigSection obj) {
         var result = Collection.ReplaceOne(item => item.Id == obj.Id, obj);
-        return (int) result.ModifiedCount;
+        return (int)result.ModifiedCount;
     }
 
     public int Delete(string id) {
         var result = Collection.DeleteOne(a => a.Id == id);
-        return (int) result.DeletedCount;
+        return (int)result.DeletedCount;
     }
 }

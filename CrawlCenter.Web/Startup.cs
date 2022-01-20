@@ -33,23 +33,20 @@ namespace CrawlCenter.Web {
                 builder.AddRazorRuntimeCompilation();
             }
 
-            services.AddHangfire(_configuration);
-            services.AddExceptionless();
-            services.AddSwagger();
+            services.AddSettings(_configuration);
 
+            services.AddHangfire(_configuration);
+            services.AddSwagger();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            services.AddAuth(_configuration);
 
             // 添加消息框架
             services.AddSingleton<Messages>();
-
             // 添加FreeSQL
             services.AddFreeSql(_configuration);
-
             // 添加仓储
             services.AddRepositories();
-
-            // 添加MongoDB
-            services.AddMongoDB(_configuration);
 
             services.AddExceptionless(_configuration);
         }

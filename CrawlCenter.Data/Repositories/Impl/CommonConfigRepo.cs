@@ -1,10 +1,11 @@
 ﻿using CrawlCenter.Data.Models;
 using CrawlCenter.Shared.Models;
+using Microsoft.Extensions.Options;
 
-namespace CrawlCenter.Data.Repositories.Impl; 
+namespace CrawlCenter.Data.Repositories.Impl;
 
 public class CommonConfigRepo : BaseConfigRepo {
-    public CommonConfigRepo(MongodbSettings settings) : base(settings) {
-        Collection = Database.GetCollection<ConfigSection>(settings.Collections.CommonConfig);
+    public CommonConfigRepo(IOptions<MongodbSettings> options) : base(options) {
+        Collection = Database.GetCollection<ConfigSection>(MongodbSettings.Collections.CommonConfig);
     }
 }
