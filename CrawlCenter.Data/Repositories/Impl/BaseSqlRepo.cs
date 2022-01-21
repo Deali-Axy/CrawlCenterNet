@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using CrawlCenter.Data.Models;
 using FreeSql;
 
@@ -15,6 +16,10 @@ namespace CrawlCenter.Data.Repositories.Impl {
 
         public virtual T GetById(Guid id) {
             return FreeSql.Select<T>().Where(a => a.Id == id).First();
+        }
+
+        public virtual T Get(Expression<Func<T, bool>> expression) {
+            return BaseRepo.Select.Where(expression).ToOne();
         }
 
         public virtual IEnumerable<T> GetAll() {

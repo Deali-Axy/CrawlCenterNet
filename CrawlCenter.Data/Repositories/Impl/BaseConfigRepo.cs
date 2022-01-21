@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using CrawlCenter.Data.Models;
 using CrawlCenter.Shared.Models;
 using Microsoft.Extensions.Options;
@@ -64,6 +65,10 @@ public abstract class BaseConfigRepo : IRepository<ConfigSection, string> {
 
     public ConfigSection GetById(string id) {
         return Collection.Find(a => a.Id == id).FirstOrDefault();
+    }
+
+    public ConfigSection Get(Expression<Func<ConfigSection, bool>> expression) {
+        return Collection.Find(expression).FirstOrDefault();
     }
 
     public IEnumerable<ConfigSection> GetAll() {

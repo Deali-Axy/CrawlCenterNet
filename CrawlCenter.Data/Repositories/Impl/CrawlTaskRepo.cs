@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using CrawlCenter.Data.Models;
 
 namespace CrawlCenter.Data.Repositories.Impl {
@@ -7,8 +8,11 @@ namespace CrawlCenter.Data.Repositories.Impl {
         public CrawlTaskRepo(IFreeSql freeSql) : base(freeSql) { }
 
         public override CrawlTask GetById(Guid id) {
-            return BaseRepo.Select.Where(a => a.Id == id)
-                .Include(a => a.Project).First();
+            return Get(a => a.Id == id);
+        }
+
+        public override CrawlTask Get(Expression<Func<CrawlTask, bool>> expression) {
+            return BaseRepo.Select.Where(expression).Include(a => a.Project).First();
         }
 
         public override IEnumerable<CrawlTask> GetAll() {
