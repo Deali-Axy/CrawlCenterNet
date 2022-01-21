@@ -2,6 +2,7 @@
 using System.Text;
 using System.Threading.Tasks;
 using CrawlCenter.Shared.Models;
+using CrawlCenter.Web.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -13,6 +14,7 @@ namespace CrawlCenter.Web.Extensions;
 
 public static class ConfigureAuth {
     public static void AddAuth(this IServiceCollection services, IConfiguration configuration) {
+        services.AddScoped<AuthService>();
         services.AddAuthentication(options => {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;

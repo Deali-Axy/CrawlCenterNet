@@ -3,20 +3,25 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using CrawlCenter.Data.Models;
+using CrawlCenter.Data.Repositories;
 using CrawlCenter.Shared.DTO;
 using CrawlCenter.Shared.Models;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-namespace CrawlCenter.Web.Services; 
+namespace CrawlCenter.Web.Services;
 
 public class AuthService {
     private readonly SecuritySettings _secSettings;
-    
-    public AuthService(IOptions<SecuritySettings> options) {
+    private readonly IAppRepository<User> _userRepo;
+
+    public AuthService(IOptions<SecuritySettings> options,
+        IAppRepository<User> userRepo) {
         _secSettings = options.Value;
+        _userRepo = userRepo;
     }
-    
+
     public LoginToken GenerateLoginToken(LoginUser user) {
         var claims = new List<Claim> {
             new(JwtRegisteredClaimNames.Name, user.UserName),
@@ -34,5 +39,32 @@ public class AuthService {
             Token = new JwtSecurityTokenHandler().WriteToken(jwtToken),
             Expiration = TimeZoneInfo.ConvertTimeFromUtc(jwtToken.ValidTo, TimeZoneInfo.Local)
         };
+    }
+
+    public User GetUser(string name) {
+        return _userRepo.Get(a => a.Name == name);
+    }
+
+    public User GetUser(ClaimsPrincipal claims) {
+        var identity = (ClaimsIdentity?)claims.Identity;
+        return GetUser(identity?.Name!);
+    }
+
+    public UserProfile GetUserProfile(string username) {
+        var user = GetUser(username);
+        return user == null
+            ? null
+            : new UserProfile {
+                Identity = user.Id.ToString(),
+                Name = user.Name,
+                Phone = user.Phone,
+                DateTimeJoined = user.DateTimeJoined,
+                Description = ""
+            };
+    }
+
+    public UserProfile GetUserProfile(ClaimsPrincipal claims) {
+        var identity = (ClaimsIdentity?)claims.Identity;
+        return GetUserProfile(identity?.Name!);
     }
 }

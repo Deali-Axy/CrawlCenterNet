@@ -6,7 +6,7 @@ namespace CrawlCenter.Data.Models {
     /// </summary>
     public class User : EntityBase {
         /// <summary>
-        /// 姓名
+        /// 用户名
         /// </summary>
         public string Name { get; set; }
         
