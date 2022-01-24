@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using FreeSql.DataAnnotations;
 
 namespace CrawlCenter.Data.Models {
     /// <summary>
@@ -24,5 +26,11 @@ namespace CrawlCenter.Data.Models {
         /// 加入时间
         /// </summary>
         public DateTime? DateTimeJoined { get; set; }
+
+        /// <summary>
+        /// 用户创建的爬虫
+        /// </summary>
+        [Navigate(ManyToMany = typeof(UserCrawlTask))]
+        public List<CrawlTask> CrawlTasks { get; set; }
     }
 }
