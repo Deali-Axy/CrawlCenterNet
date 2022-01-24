@@ -54,7 +54,7 @@ public class AuthController : ControllerBase {
             Phone = userCreateDto.Phone
         };
 
-        if (_userRepo.Insert(user) > 0) return user;
+        if (_userRepo.Insert(user) != null) return user;
 
         return BadRequest(new { msg = "新用户插入数据库失败！" });
     }

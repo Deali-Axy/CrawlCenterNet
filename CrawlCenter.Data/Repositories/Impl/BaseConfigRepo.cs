@@ -75,9 +75,9 @@ public abstract class BaseConfigRepo : IRepository<ConfigSection, string> {
         return Collection.Find(a => true).ToList();
     }
 
-    public int Insert(ConfigSection obj) {
+    public ConfigSection Insert(ConfigSection obj) {
         Collection.InsertOne(obj);
-        return 1;
+        return obj;
     }
 
     public int Update(ConfigSection obj) {

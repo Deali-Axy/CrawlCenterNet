@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
 using CrawlCenter.Data.Models;
+using CrawlCenter.Shared.DTO.Crawl;
 using CrawlCenter.Web.ViewModels.Crawl;
 using CrawlCenter.Web.ViewModels.Projects;
 using CrawlCenter.Web.ViewModels.RecurringTasks;
@@ -12,7 +13,7 @@ namespace CrawlCenter.Web.AutoMapper {
         };
 
         public CrawlTaskProfile() {
-            CreateMap<CrawlTask, CrawlTaskCreateViewModel>();
+            CreateMap<CrawlTaskCreateDto, CrawlTask>();
             CreateMap<CrawlTaskCreateViewModel, CrawlTask>();
             CreateMap<CrawlTask, CrawlTaskEditViewModel>();
             CreateMap<CrawlTaskEditViewModel, CrawlTask>();

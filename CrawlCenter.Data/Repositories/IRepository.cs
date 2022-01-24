@@ -7,7 +7,7 @@ namespace CrawlCenter.Data.Repositories {
         TEntity GetById(TPrimaryKey id);
         TEntity Get(Expression<Func<TEntity, bool>> expression);
         IEnumerable<TEntity> GetAll();
-        int Insert(TEntity obj);
+        TEntity Insert(TEntity obj);
         int Update(TEntity obj);
         int Delete(TPrimaryKey id);
     }

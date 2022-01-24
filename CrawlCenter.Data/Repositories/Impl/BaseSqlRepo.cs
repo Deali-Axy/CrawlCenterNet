@@ -12,10 +12,11 @@ namespace CrawlCenter.Data.Repositories.Impl {
 
         public BaseSqlRepo(IFreeSql freeSql) {
             FreeSql = freeSql;
+            BaseRepo.DbContextOptions.EnableAddOrUpdateNavigateList = true;
         }
 
         public virtual T GetById(Guid id) {
-            return FreeSql.Select<T>().Where(a => a.Id == id).First();
+            return BaseRepo.Select.Where(a => a.Id == id).First();
         }
 
         public virtual T Get(Expression<Func<T, bool>> expression) {
@@ -23,14 +24,11 @@ namespace CrawlCenter.Data.Repositories.Impl {
         }
 
         public virtual IEnumerable<T> GetAll() {
-            return FreeSql.Select<T>().ToList();
+            return BaseRepo.Select.ToList();
         }
 
-        public virtual int Insert(T obj) {
-            return FreeSql.InsertOrUpdate<T>()
-                .SetSource(obj) //需要操作的数据
-                .IfExistsDoNothing() //如果数据存在，啥事也不干（相当于只有不存在数据时才插入）
-                .ExecuteAffrows();
+        public virtual T Insert(T obj) {
+            return BaseRepo.InsertOrUpdate(obj);
         }
 
         public virtual int Update(T obj) {
