@@ -6,6 +6,7 @@ using CrawlCenter.Web.Extensions;
 using CrawlCenter.Web.Middlewares;
 using Exceptionless;
 using Hangfire;
+using Hangfire.Dashboard;
 using IGeekFan.AspNetCore.Knife4jUI;
 using IGeekFan.AspNetCore.RapiDoc;
 using Microsoft.AspNetCore.Builder;
@@ -54,7 +55,7 @@ namespace CrawlCenter.Web {
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
             app.UseExceptionless();
-            app.UseMiddleware<PrintRequestMiddleware>();
+            // app.UseMiddleware<PrintRequestMiddleware>();
 
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
