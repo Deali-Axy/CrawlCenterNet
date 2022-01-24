@@ -25,9 +25,12 @@
 
     <div class="form-group row">
         <label asp-for="Cron" class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-10">
+        <div class="col-sm-9">
             <input asp-for="Cron" class="form-control"/>
             <span class="text-danger" asp-validation-for="Cron"></span>
+        </div>
+        <div class="col-sm-1">
+            <a class="btn btn-primary" href="https://www.bejson.com/othertools/cron/" target="_blank">在线生成</a>
         </div>
     </div>
 
