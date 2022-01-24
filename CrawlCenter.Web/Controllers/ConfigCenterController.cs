@@ -12,11 +12,9 @@ namespace CrawlCenter.Web.Controllers {
     [ApiExplorerSettings(IgnoreApi = true)]
     public class ConfigCenterController : Controller {
         private readonly Messages _messages;
-        private readonly IRepository<ConfigSection, string> _configRepo;
+        private readonly CommonConfigRepo _configRepo;
 
-        public ConfigCenterController(
-            Messages messages,
-            IRepository<ConfigSection, string> configRepo) {
+        public ConfigCenterController(Messages messages, CommonConfigRepo configRepo) {
             _messages = messages;
             _configRepo = configRepo;
         }
