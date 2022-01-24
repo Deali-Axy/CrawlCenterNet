@@ -112,8 +112,8 @@ namespace CrawlCenter.Web.Controllers {
         }
 
         [HttpPost]
-        public IActionResult Delete([FromForm] Guid id, [FromServices] RecurringTaskRepo recurringTaskRepo) {
-            var recurringTaskDelete = recurringTaskRepo.BaseRepo
+        public IActionResult Delete([FromForm] Guid id, [FromServices] IAppRepository<RecurringTask> recurringTaskRepo) {
+            var recurringTaskDelete = ((RecurringTaskRepo)recurringTaskRepo).BaseRepo
                 .Where(a => a.CrawlTaskId == id).ToDelete();
             var affectRows = _crawlTaskRepo.Delete(id);
             if (affectRows > 0) {
