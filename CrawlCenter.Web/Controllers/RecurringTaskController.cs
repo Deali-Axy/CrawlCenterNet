@@ -5,7 +5,9 @@ using AutoMapper;
 using CrawlCenter.Contrib.WebMessages;
 using CrawlCenter.Data.Models;
 using CrawlCenter.Data.Repositories;
+using CrawlCenter.Web.Tasks;
 using CrawlCenter.Web.ViewModels.RecurringTasks;
+using Hangfire;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -93,11 +95,30 @@ namespace CrawlCenter.Web.Controllers {
 
         [HttpPost]
         public IActionResult Delete([FromForm] Guid id) {
+            var job = _recurringTaskRepo.GetById(id);
+            if (job == null) return NotFound();
+            RecurringJob.RemoveIfExists(job.Id.ToString());
+
             var affectRows = _recurringTaskRepo.Delete(id);
             if (affectRows > 0)
                 _messages.Success($"删除定时任务 {id} 成功！");
             else
                 _messages.Error($"删除定时任务 {id} 失败！");
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public IActionResult SyncData() {
+            var jobs = _recurringTaskRepo.GetAll().ToList();
+            foreach (var job in jobs) {
+                RecurringJob.RemoveIfExists(job.Id.ToString());
+                RecurringJob.AddOrUpdate(job.Id.ToString(),
+                    () => new RunCrawl().Run(job.CrawlTask),
+                    () => job.Cron);
+            }
+
+            _messages.Info($"已同步{jobs.Count}个定时任务！");
+
             return RedirectToAction(nameof(Index));
         }
     }
