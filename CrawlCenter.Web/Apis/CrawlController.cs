@@ -35,12 +35,9 @@ public class CrawlController : ControllerBase {
     /// <returns></returns>
     [HttpPost]
     public ActionResult<CrawlTask> Create(CrawlTaskCreateDto crawlDto) {
-        var user = _authService.GetUser(HttpContext.User);
-
         var crawl = _mapper.Map<CrawlTask>(crawlDto);
         crawl.Id = Guid.NewGuid().ToString();
-        crawl.UserId = user.Id;
-        crawl.User = user;
+        crawl.UserId = User.Identity?.Name;
         _crawlRepo.Insert(crawl);
 
         return CreatedAtAction(nameof(Create), crawl);
@@ -62,7 +59,7 @@ public class CrawlController : ControllerBase {
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    [HttpGet("{id:guid}")]
+    [HttpGet("{id}")]
     public ActionResult<CrawlTask> Get(string id) {
         var crawl = _crawlRepo.Select.Where(a => a.Id == id).ToOne();
         if (crawl == null) return NotFound();
@@ -70,19 +67,28 @@ public class CrawlController : ControllerBase {
     }
 
     /// <summary>
-    /// 更新
+    /// 更新爬虫信息
     /// </summary>
     /// <returns></returns>
-    [HttpPut]
-    public ActionResult<CrawlTask> Update(CrawlTaskEditDto dto) {
-        var crawl = _crawlRepo.Select.Where(a => a.Id == dto.Id).ToOne();
+    [HttpPut("{id}")]
+    public ActionResult<CrawlTask> Update(string id, CrawlTaskEditDto dto) {
+        var crawl = _crawlRepo.Select.Where(a => a.Id == id).ToOne();
         if (crawl == null) return NotFound();
         if (!ModelState.IsValid) return BadRequest();
-        
-        var newCrawl = _mapper.Map<CrawlTask>(dto);
-        var affectRows = _crawlRepo.Update(newCrawl);
-        
-        if (affectRows > 0) return newCrawl;
-        return BadRequest(new { msg = "写入数据库失败" });
+
+        crawl = _mapper.Map<CrawlTask>(dto);
+        var affectRows = _crawlRepo.Update(crawl);
+
+        return affectRows > 0 ? crawl : BadRequest(new {msg = "写入数据库失败"});
+    }
+
+    [HttpDelete("{id}")]
+    public IActionResult Delete(string id) {
+        var crawl = _crawlRepo.Select.Where(a => a.Id == id).ToOne();
+        if (crawl == null) return NotFound();
+        var affectRows = _crawlRepo.Delete(crawl);
+        return affectRows > 0
+            ? Ok(new {msg = "删除成功"})
+            : BadRequest(new {msg = "删除数据失败"});
     }
 }
