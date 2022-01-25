@@ -82,6 +82,10 @@ namespace CrawlCenter.Web {
                 c.RoutePrefix = "docs/swagger";
                 c.SwaggerEndpoint("/v1/api-docs", "V1 Docs");
             });
+            app.UseReDoc(c => {
+                c.RoutePrefix = "docs/redoc";
+                c.SpecUrl = "/v1/api-docs";
+            });
             app.UseKnife4UI(c => {
                 c.RoutePrefix = "docs/knife4j";
                 c.SwaggerEndpoint("/v1/api-docs", "V1 Docs");
