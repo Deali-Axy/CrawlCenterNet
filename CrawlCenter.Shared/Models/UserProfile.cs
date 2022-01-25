@@ -7,7 +7,7 @@ public class UserProfile {
     /// <summary>
     /// ID、识别符
     /// </summary>
-    public string Identity { get; set; }
+    public string? Identity { get; set; }
 
     /// <summary>
     /// 姓名
