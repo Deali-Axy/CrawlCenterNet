@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using AutoMapper;
 using CrawlCenter.Data.Models;
 using CrawlCenter.Data.Repositories;
 using CrawlCenter.Data.Repositories.Impl;
 using CrawlCenter.Shared.DTO.Crawl;
 using CrawlCenter.Web.Services;
+using FreeSql;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,12 +16,12 @@ namespace CrawlCenter.Web.Apis;
 [ApiController]
 [Route("Api/[controller]")]
 public class CrawlController : ControllerBase {
-    private readonly IAppRepository<CrawlTask> _crawlRepo;
-    private readonly IAppRepository<User> _userRepo;
+    private readonly IBaseRepository<CrawlTask> _crawlRepo;
+    private readonly IBaseRepository<User> _userRepo;
     private readonly AuthService _authService;
     private readonly IMapper _mapper;
 
-    public CrawlController(IAppRepository<CrawlTask> crawlRepo, AuthService authService, IMapper mapper, IAppRepository<User> userRepo) {
+    public CrawlController(IBaseRepository<CrawlTask> crawlRepo, AuthService authService, IMapper mapper, IBaseRepository<User> userRepo) {
         _crawlRepo = crawlRepo;
         _authService = authService;
         _mapper = mapper;
@@ -41,14 +43,18 @@ public class CrawlController : ControllerBase {
         crawl.User = user;
         _crawlRepo.Insert(crawl);
 
-        user.CrawlTasks.Add(crawl);
-        _userRepo.Update(user);
+        return CreatedAtAction(nameof(Create), crawl);
+    }
 
-        var resp = new {
-            Data = crawl,
-            ((UserRepo)_userRepo).BaseRepo.DbContextOptions
-        };
-
-        return CreatedAtAction(nameof(Create), resp);
+    /// <summary>
+    /// 获取全部爬虫
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet]
+    public ActionResult<List<CrawlTask>> GetAll() {
+        var profile = _authService.GetUserProfile(HttpContext.User);
+        return _crawlRepo.Select
+            .Where(a => a.UserId == Guid.Parse(profile.Identity))
+            .ToList();
     }
 }
