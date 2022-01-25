@@ -63,6 +63,7 @@ public class CrawlController : ControllerBase {
     public ActionResult<CrawlTask> Get(string id) {
         var crawl = _crawlRepo.Select.Where(a => a.Id == id).ToOne();
         if (crawl == null) return NotFound();
+        if (crawl.UserId != User.Identity?.Name) return Unauthorized(new {msg = "这不是你的爬虫！"});
         return crawl;
     }
 
@@ -74,6 +75,7 @@ public class CrawlController : ControllerBase {
     public ActionResult<CrawlTask> Update(string id, CrawlTaskEditDto dto) {
         var crawl = _crawlRepo.Select.Where(a => a.Id == id).ToOne();
         if (crawl == null) return NotFound();
+        if (crawl.UserId != User.Identity?.Name) return Unauthorized(new {msg = "这不是你的爬虫！"});
         if (!ModelState.IsValid) return BadRequest();
 
         crawl = _mapper.Map<CrawlTask>(dto);
@@ -86,6 +88,7 @@ public class CrawlController : ControllerBase {
     public IActionResult Delete(string id) {
         var crawl = _crawlRepo.Select.Where(a => a.Id == id).ToOne();
         if (crawl == null) return NotFound();
+        if (crawl.UserId != User.Identity?.Name) return Unauthorized(new {msg = "这不是你的爬虫！"});
         var affectRows = _crawlRepo.Delete(crawl);
         return affectRows > 0
             ? Ok(new {msg = "删除成功"})
