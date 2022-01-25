@@ -94,7 +94,11 @@ namespace CrawlCenter.Web {
                 c.RoutePrefix = "docs/rapi";
                 c.SwaggerEndpoint("/v1/api-docs", "V1 Docs");
                 c.GenericRapiConfig = new GenericRapiConfig {
-                    Theme = "light"
+                    Theme = "light",
+                    AllowAuthentication = false,
+                    ApiKeyLocation = "header",
+                    ApiKeyName = "Authorization",
+                    ApiKeyValue = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QtdXNyIiwibmFtZSI6IjQ3NjNkM2FiLTIxYzYtNGQxMi1iZDYxLTk1NTM5YjRmMDcxOCIsImp0aSI6IjRmM2UzZGZlLTkzZjYtNGRmZi04NDc1LWUxNTA0N2NiNTU4NCIsImV4cCI6MTY0MzcyMzA0NSwiaXNzIjoiZGVtb19pc3N1ZXIiLCJhdWQiOiJkZW1vX2F1ZGllbmNlIn0.4-jECsMbOSHvEhD0Xfh8NEE3uq2SVrNJEuIAHRAvhuc"
                 };
             });
 
