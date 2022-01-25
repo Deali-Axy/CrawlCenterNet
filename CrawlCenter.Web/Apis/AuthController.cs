@@ -34,7 +34,7 @@ public class AuthController : ControllerBase {
         var md5Pwd = loginUser.Password.MDString();
         if (md5Pwd != user.Password) return Unauthorized();
 
-        return _authService.GenerateLoginToken(loginUser);
+        return _authService.GenerateLoginToken(user);
     }
 
     /// <summary>
@@ -62,7 +62,7 @@ public class AuthController : ControllerBase {
     [Authorize]
     [HttpGet]
     public ActionResult<User> GetUser() {
-        var user = _authService.GetUser(HttpContext.User);
+        var user = _authService.GetUser(User);
         if (user == null) return NotFound();
         return user;
     }
