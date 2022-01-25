@@ -57,4 +57,33 @@ public class CrawlController : ControllerBase {
             .Where(a => a.UserId == Guid.Parse(profile.Identity))
             .ToList();
     }
+
+    /// <summary>
+    /// 获取爬虫
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [HttpGet("{id:guid}")]
+    public ActionResult<CrawlTask> Get(Guid id) {
+        var crawl = _crawlRepo.Select.Where(a => a.Id == id).ToOne();
+        if (crawl == null) return NotFound();
+        return crawl;
+    }
+
+    /// <summary>
+    /// 更新
+    /// </summary>
+    /// <returns></returns>
+    [HttpPut]
+    public ActionResult<CrawlTask> Update(CrawlTaskEditDto dto) {
+        var crawl = _crawlRepo.Select.Where(a => a.Id == dto.Id).ToOne();
+        if (crawl == null) return NotFound();
+        if (!ModelState.IsValid) return BadRequest();
+        
+        var newCrawl = _mapper.Map<CrawlTask>(dto);
+        var affectRows = _crawlRepo.Update(newCrawl);
+        
+        if (affectRows > 0) return newCrawl;
+        return BadRequest(new { msg = "写入数据库失败" });
+    }
 }

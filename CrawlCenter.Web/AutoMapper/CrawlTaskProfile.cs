@@ -15,6 +15,7 @@ namespace CrawlCenter.Web.AutoMapper {
         public CrawlTaskProfile() {
             CreateMap<CrawlTaskCreateDto, CrawlTask>();
             CreateMap<CrawlTaskCreateViewModel, CrawlTask>();
+            CreateMap<CrawlTaskEditDto, CrawlTask>();
             CreateMap<CrawlTask, CrawlTaskEditViewModel>();
             CreateMap<CrawlTaskEditViewModel, CrawlTask>();
 
