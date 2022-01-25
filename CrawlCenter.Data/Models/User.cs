@@ -30,6 +30,6 @@ namespace CrawlCenter.Data.Models {
         /// <summary>
         /// 用户创建的爬虫
         /// </summary>
-        public List<CrawlTask> CrawlTasks { get; set; } = new();
+        public List<CrawlTask> CrawlTasks { get; set; }
     }
 }
