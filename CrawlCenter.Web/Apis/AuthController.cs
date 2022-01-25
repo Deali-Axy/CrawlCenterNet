@@ -59,6 +59,10 @@ public class AuthController : ControllerBase {
         return BadRequest(new { msg = "新用户插入数据库失败！" });
     }
 
+    /// <summary>
+    /// 获取当前用户信息
+    /// </summary>
+    /// <returns></returns>
     [Authorize]
     [HttpGet]
     public ActionResult<User> GetUser() {

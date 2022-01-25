@@ -12,6 +12,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CrawlCenter.Web.Apis;
 
+/// <summary>
+/// 爬虫管理
+/// </summary>
 [Authorize]
 [ApiController]
 [Route("Api/[controller]")]
@@ -84,6 +87,11 @@ public class CrawlController : ControllerBase {
         return affectRows > 0 ? crawl : BadRequest(new {msg = "写入数据库失败"});
     }
 
+    /// <summary>
+    /// 删除爬虫
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(string id) {
         var crawl = _crawlRepo.Select.Where(a => a.Id == id).ToOne();
