@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using CrawlCenter.Data.Models;
 using CrawlCenter.Data.Repositories;
 using CrawlCenter.Shared.DTO;
 using CrawlCenter.Shared.Models;
+using FreeSql;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
@@ -14,17 +16,19 @@ namespace CrawlCenter.Web.Services;
 
 public class AuthService {
     private readonly SecuritySettings _secSettings;
-    private readonly IAppRepository<User> _userRepo;
+    private readonly IBaseRepository<User> _userRepo;
 
     public AuthService(IOptions<SecuritySettings> options,
-        IAppRepository<User> userRepo) {
+        IBaseRepository<User> userRepo) {
         _secSettings = options.Value;
         _userRepo = userRepo;
     }
 
-    public LoginToken GenerateLoginToken(LoginUser user) {
+    public LoginToken GenerateLoginToken(User user) {
         var claims = new List<Claim> {
-            new(JwtRegisteredClaimNames.Name, user.UserName),
+            new("id", user.Id.ToString()),
+            new(JwtRegisteredClaimNames.Name, user.Name), // User.Identity.Name
+            new(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()), // JWT ID
         };
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secSettings.Token.Key));
         var signCredential = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -42,29 +46,30 @@ public class AuthService {
     }
 
     public User GetUser(string name) {
-        return _userRepo.Get(a => a.Name == name);
+        return _userRepo.Select.Where(a => a.Name == name).ToOne();
     }
 
-    public User GetUser(ClaimsPrincipal claims) {
-        var identity = (ClaimsIdentity?)claims.Identity;
-        return GetUser(identity?.Name!);
+    public User GetUser(ClaimsPrincipal user) {
+        return GetUser(user.Identity?.Name);
     }
 
-    public UserProfile GetUserProfile(string username) {
-        var user = GetUser(username);
-        return user == null
-            ? null
-            : new UserProfile {
-                Identity = user.Id.ToString(),
-                Name = user.Name,
-                Phone = user.Phone,
-                DateTimeJoined = user.DateTimeJoined,
-                Description = ""
-            };
-    }
+    /// <summary>
+    /// 从 JwtToken 的 claims 里获取 UserProfile 对象
+    /// （无数据库请求）
+    /// </summary>
+    /// <param name="user"></param>
+    /// <returns></returns>
+    public UserProfile GetUserProfile(ClaimsPrincipal user) {
+        DateTime.TryParse(
+            user.Claims.FirstOrDefault(c => c.Type == "DateTimeJoined")?.Value!,
+            out var dateTimeJoined);
 
-    public UserProfile GetUserProfile(ClaimsPrincipal claims) {
-        var identity = (ClaimsIdentity?)claims.Identity;
-        return GetUserProfile(identity?.Name!);
+        return new UserProfile {
+            Identity = user.Claims.FirstOrDefault(c => c.Type == "id")?.Value,
+            Name = user.Identity?.Name,
+            Phone = user.Claims.FirstOrDefault(c => c.Type == "Phone")?.Value,
+            DateTimeJoined = dateTimeJoined,
+            Description = user.Claims.FirstOrDefault(c => c.Type == "Description")?.Value,
+        };
     }
 }
