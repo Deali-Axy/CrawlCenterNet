@@ -26,9 +26,9 @@ public class AuthService {
 
     public LoginToken GenerateLoginToken(User user) {
         var claims = new List<Claim> {
-            new("id", user.Id.ToString()),
-            new(JwtRegisteredClaimNames.Name, user.Name), // User.Identity.Name
-            new(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()), // JWT ID
+            new("username", user.Name),
+            new(JwtRegisteredClaimNames.Name, user.Id), // User.Identity.Name
+            new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()), // JWT ID
         };
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secSettings.Token.Key));
         var signCredential = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -61,15 +61,15 @@ public class AuthService {
     /// <returns></returns>
     public UserProfile GetUserProfile(ClaimsPrincipal user) {
         DateTime.TryParse(
-            user.Claims.FirstOrDefault(c => c.Type == "DateTimeJoined")?.Value!,
+            user.Claims.FirstOrDefault(c => c.Type == "datetime_joined")?.Value!,
             out var dateTimeJoined);
 
         return new UserProfile {
-            Identity = user.Claims.FirstOrDefault(c => c.Type == "id")?.Value,
-            Name = user.Identity?.Name,
-            Phone = user.Claims.FirstOrDefault(c => c.Type == "Phone")?.Value,
+            Identity = user.Identity?.Name,
+            Name = user.Claims.FirstOrDefault(c => c.Type == "username")?.Value,
+            Phone = user.Claims.FirstOrDefault(c => c.Type == "phone")?.Value,
             DateTimeJoined = dateTimeJoined,
-            Description = user.Claims.FirstOrDefault(c => c.Type == "Description")?.Value,
+            Description = user.Claims.FirstOrDefault(c => c.Type == "description")?.Value,
         };
     }
 }
