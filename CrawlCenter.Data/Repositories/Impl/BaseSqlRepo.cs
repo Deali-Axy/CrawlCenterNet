@@ -15,7 +15,7 @@ namespace CrawlCenter.Data.Repositories.Impl {
             FreeSql.SetDbContextOptions(options => options.EnableAddOrUpdateNavigateList = true);
         }
 
-        public virtual T GetById(Guid id) {
+        public virtual T GetById(string id) {
             return BaseRepo.Select.Where(a => a.Id == id).First();
         }
 
@@ -41,7 +41,7 @@ namespace CrawlCenter.Data.Repositories.Impl {
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public virtual int Delete(Guid id) {
+        public virtual int Delete(string id) {
             // return FreeSql.Delete<T>().Where(a => a.Id == id).ExecuteAffrows();
             // ISelect.ToDelete 高级删除
             // IDelete 默认不支持导航对象，多表关联等。ISelect.ToDelete 可将查询转为 IDelete，以便使用导航对象删除数据

@@ -38,7 +38,7 @@ public class CrawlController : ControllerBase {
         var user = _authService.GetUser(HttpContext.User);
 
         var crawl = _mapper.Map<CrawlTask>(crawlDto);
-        crawl.Id = Guid.NewGuid();
+        crawl.Id = Guid.NewGuid().ToString();
         crawl.UserId = user.Id;
         crawl.User = user;
         _crawlRepo.Insert(crawl);
@@ -52,9 +52,8 @@ public class CrawlController : ControllerBase {
     /// <returns></returns>
     [HttpGet]
     public ActionResult<List<CrawlTask>> GetAll() {
-        var profile = _authService.GetUserProfile(HttpContext.User);
         return _crawlRepo.Select
-            .Where(a => a.UserId == Guid.Parse(profile.Identity))
+            .Where(a => a.UserId == User.Identity.Name)
             .ToList();
     }
 
@@ -64,7 +63,7 @@ public class CrawlController : ControllerBase {
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id:guid}")]
-    public ActionResult<CrawlTask> Get(Guid id) {
+    public ActionResult<CrawlTask> Get(string id) {
         var crawl = _crawlRepo.Select.Where(a => a.Id == id).ToOne();
         if (crawl == null) return NotFound();
         return crawl;

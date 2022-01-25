@@ -47,7 +47,7 @@ public class AuthController : ControllerBase {
         if (_userRepo.Get(a => a.Name == userCreateDto.Name) != null)
             return BadRequest(new { msg = "用户已存在！" });
         var user = new User {
-            Id = Guid.NewGuid(),
+            Id = Guid.NewGuid().ToString(),
             Name = userCreateDto.Name,
             Password = userCreateDto.Password.MDString(),
             DateTimeJoined = DateTime.Now,

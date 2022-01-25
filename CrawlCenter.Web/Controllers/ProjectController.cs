@@ -54,7 +54,7 @@ namespace CrawlCenter.Web.Controllers {
             if (!ModelState.IsValid) return View();
 
             var project = _mapper.Map<Project>(viewModel);
-            project.Id = Guid.NewGuid();
+            project.Id = Guid.NewGuid().ToString();
             _projectRepo.Insert(project);
             _messages.Success("添加项目成功！");
 

@@ -2,6 +2,6 @@
 
 namespace CrawlCenter.Web.ViewModels.RecurringTasks {
     public class RecurringTaskEditViewModel : RecurringTaskCreateViewModel {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
     }
 }

@@ -42,7 +42,7 @@ namespace CrawlCenter.Web.Controllers {
             });
         }
 
-        public IActionResult Details(Guid id) {
+        public IActionResult Details(string id) {
             return View(_recurringTaskRepo.GetById(id));
         }
 
@@ -58,7 +58,7 @@ namespace CrawlCenter.Web.Controllers {
             if (!ModelState.IsValid) return View();
 
             var recurringTask = _mapper.Map<RecurringTask>(viewModel);
-            recurringTask.Id = Guid.NewGuid();
+            recurringTask.Id = Guid.NewGuid().ToString();
             _recurringTaskRepo.Insert(recurringTask);
             _messages.Success("添加定时任务成功！");
 
@@ -66,7 +66,7 @@ namespace CrawlCenter.Web.Controllers {
         }
 
         [HttpGet]
-        public IActionResult Edit(Guid id) {
+        public IActionResult Edit(string id) {
             ViewBag.CrawlTasks = CrawlSelectList;
             var task = _recurringTaskRepo.GetById(id);
 
@@ -94,7 +94,7 @@ namespace CrawlCenter.Web.Controllers {
         }
 
         [HttpPost]
-        public IActionResult Delete([FromForm] Guid id) {
+        public IActionResult Delete([FromForm] string id) {
             var job = _recurringTaskRepo.GetById(id);
             if (job == null) return NotFound();
             RecurringJob.RemoveIfExists(job.Id.ToString());

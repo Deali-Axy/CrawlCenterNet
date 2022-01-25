@@ -52,8 +52,8 @@ namespace CrawlCenter.Web.Controllers {
             var crawlTasks = _crawlTaskRepo.GetAll();
 
             if (!string.IsNullOrEmpty(projectId)) {
-                ViewBag.SelectedProjectName = _projectRepo.GetById(Guid.Parse(projectId)).Name;
-                crawlTasks = _crawlTaskRepo.GetAll().Where(a => a.ProjectId == Guid.Parse(projectId));
+                ViewBag.SelectedProjectName = _projectRepo.GetById(projectId).Name;
+                crawlTasks = _crawlTaskRepo.GetAll().Where(a => a.ProjectId == projectId);
             }
 
             return View(new CrawlTaskIndexViewModel {
@@ -62,7 +62,7 @@ namespace CrawlCenter.Web.Controllers {
             });
         }
 
-        public IActionResult Details(Guid id) {
+        public IActionResult Details(string id) {
             return View(_crawlTaskRepo.GetById(id));
         }
 
@@ -79,7 +79,7 @@ namespace CrawlCenter.Web.Controllers {
             if (!ModelState.IsValid) return View();
 
             var newTask = _mapper.Map<CrawlTask>(viewModel);
-            newTask.Id = Guid.NewGuid();
+            newTask.Id = Guid.NewGuid().ToString();
             _crawlTaskRepo.Insert(newTask);
             _messages.Success("添加爬虫成功！");
             
@@ -87,7 +87,7 @@ namespace CrawlCenter.Web.Controllers {
         }
 
         [HttpGet]
-        public IActionResult Edit(Guid id) {
+        public IActionResult Edit(string id) {
             ViewBag.Projects = ProjectSelectList;
 
             var crawlTask = _crawlTaskRepo.GetById(id);
@@ -112,7 +112,7 @@ namespace CrawlCenter.Web.Controllers {
         }
 
         [HttpPost]
-        public IActionResult Delete([FromForm] Guid id, [FromServices] IAppRepository<RecurringTask> recurringTaskRepo) {
+        public IActionResult Delete([FromForm] string id, [FromServices] IAppRepository<RecurringTask> recurringTaskRepo) {
             var recurringTaskDelete = ((RecurringTaskRepo)recurringTaskRepo).BaseRepo
                 .Where(a => a.CrawlTaskId == id).ToDelete();
             var affectRows = _crawlTaskRepo.Delete(id);
@@ -126,7 +126,7 @@ namespace CrawlCenter.Web.Controllers {
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Run(Guid id) {
+        public IActionResult Run(string id) {
             var task = _crawlTaskRepo.GetById(id);
             _backgroundJobClient.Enqueue(() => new RunCrawl().Run(task));
             // RecurringJob.AddOrUpdate(

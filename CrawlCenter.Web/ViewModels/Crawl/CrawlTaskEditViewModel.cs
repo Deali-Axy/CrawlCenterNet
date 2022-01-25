@@ -4,6 +4,6 @@ using CrawlCenter.Data.Models;
 
 namespace CrawlCenter.Web.ViewModels.Crawl {
     public class CrawlTaskEditViewModel : CrawlTaskCreateViewModel {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
     }
 }

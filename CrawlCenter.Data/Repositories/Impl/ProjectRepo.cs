@@ -7,7 +7,7 @@ namespace CrawlCenter.Data.Repositories.Impl {
     public class ProjectRepo : BaseSqlRepo<Project> {
         public ProjectRepo(IFreeSql freeSql) : base(freeSql) { }
 
-        public override Project GetById(Guid id) {
+        public override Project GetById(string id) {
             return Get(a => a.Id == id);
         }
 

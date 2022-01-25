@@ -31,7 +31,7 @@ namespace CrawlCenter.Data.Models {
         /// <summary>
         /// 项目ID
         /// </summary>
-        public Guid? ProjectId { get; set; }
+        public string? ProjectId { get; set; }
 
         /// <summary>
         /// 代码目录
@@ -51,6 +51,6 @@ namespace CrawlCenter.Data.Models {
         /// <summary>
         /// 用户ID
         /// </summary>
-        public Guid? UserId { get; set; }
+        public string? UserId { get; set; }
     }
 }

@@ -7,7 +7,7 @@ namespace CrawlCenter.Data.Repositories.Impl {
     public class CrawlTaskRepo : BaseSqlRepo<CrawlTask> {
         public CrawlTaskRepo(IFreeSql freeSql) : base(freeSql) { }
 
-        public override CrawlTask GetById(Guid id) {
+        public override CrawlTask GetById(string id) {
             return Get(a => a.Id == id);
         }
 

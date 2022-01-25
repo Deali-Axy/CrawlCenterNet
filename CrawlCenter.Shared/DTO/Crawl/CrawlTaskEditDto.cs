@@ -1,5 +1,5 @@
 ﻿namespace CrawlCenter.Shared.DTO.Crawl; 
 
 public class CrawlTaskEditDto : CrawlTaskCreateDto {
-    public Guid Id { get; set; }
+    public string Id { get; set; }
 }

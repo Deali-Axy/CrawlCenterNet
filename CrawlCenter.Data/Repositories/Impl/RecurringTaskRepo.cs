@@ -7,7 +7,7 @@ namespace CrawlCenter.Data.Repositories.Impl {
     public class RecurringTaskRepo : BaseSqlRepo<RecurringTask> {
         public RecurringTaskRepo(IFreeSql freeSql) : base(freeSql) { }
 
-        public override RecurringTask GetById(Guid id) {
+        public override RecurringTask GetById(string id) {
             return Get(a => a.Id == id);
         }
 

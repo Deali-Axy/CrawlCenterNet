@@ -18,7 +18,7 @@ namespace CrawlCenter.Data.Models {
         /// <summary>
         /// 爬虫ID
         /// </summary>
-        public Guid? CrawlTaskId { get; set; }
+        public string? CrawlTaskId { get; set; }
 
         /// <summary>
         /// Cron表达式
