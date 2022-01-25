@@ -12,7 +12,7 @@ namespace CrawlCenter.Data.Repositories.Impl {
 
         public BaseSqlRepo(IFreeSql freeSql) {
             FreeSql = freeSql;
-            BaseRepo.DbContextOptions.EnableAddOrUpdateNavigateList = true;
+            FreeSql.SetDbContextOptions(options => options.EnableAddOrUpdateNavigateList = true);
         }
 
         public virtual T GetById(Guid id) {

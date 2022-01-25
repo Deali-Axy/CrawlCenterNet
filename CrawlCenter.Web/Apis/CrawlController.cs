@@ -2,6 +2,7 @@
 using AutoMapper;
 using CrawlCenter.Data.Models;
 using CrawlCenter.Data.Repositories;
+using CrawlCenter.Data.Repositories.Impl;
 using CrawlCenter.Shared.DTO.Crawl;
 using CrawlCenter.Web.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -32,14 +33,22 @@ public class CrawlController : ControllerBase {
     /// <returns></returns>
     [HttpPost]
     public ActionResult<CrawlTask> Create(CrawlTaskCreateDto crawlDto) {
+        var user = _authService.GetUser(HttpContext.User);
+
         var crawl = _mapper.Map<CrawlTask>(crawlDto);
         crawl.Id = Guid.NewGuid();
+        crawl.UserId = user.Id;
+        crawl.User = user;
         _crawlRepo.Insert(crawl);
-        
-        var user = _authService.GetUser(HttpContext.User);
+
         user.CrawlTasks.Add(crawl);
         _userRepo.Update(user);
-        
-        return CreatedAtAction(nameof(Create), crawl);
+
+        var resp = new {
+            Data = crawl,
+            ((UserRepo)_userRepo).BaseRepo.DbContextOptions
+        };
+
+        return CreatedAtAction(nameof(Create), resp);
     }
 }

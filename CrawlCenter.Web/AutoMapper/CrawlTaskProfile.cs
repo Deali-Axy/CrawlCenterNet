@@ -9,7 +9,7 @@ using CrawlCenter.Web.ViewModels.RecurringTasks;
 namespace CrawlCenter.Web.AutoMapper {
     public class CrawlTaskProfile : Profile {
         private readonly List<string> _unmapped = new List<string> {
-            "Project"
+            "Project", "User"
         };
 
         public CrawlTaskProfile() {

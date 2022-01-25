@@ -14,7 +14,6 @@ public static class ConfigureRepositories {
         services.AddScoped<IAppRepository<Project>, ProjectRepo>();
         services.AddScoped<IAppRepository<ProjectTag>, BaseSqlRepo<ProjectTag>>();
         services.AddScoped<IAppRepository<RecurringTask>, RecurringTaskRepo>();
-        services.AddScoped<IAppRepository<User>, BaseSqlRepo<User>>();
-        services.AddScoped<IAppRepository<UserCrawlTask>, BaseSqlRepo<UserCrawlTask>>();
+        services.AddScoped<IAppRepository<User>, UserRepo>();
     }
 }
