@@ -30,7 +30,6 @@ namespace CrawlCenter.Data.Models {
         /// <summary>
         /// 用户创建的爬虫
         /// </summary>
-        [Navigate(ManyToMany = typeof(UserCrawlTask))]
         public List<CrawlTask> CrawlTasks { get; set; } = new();
     }
 }

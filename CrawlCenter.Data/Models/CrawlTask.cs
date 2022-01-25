@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using FreeSql.DataAnnotations;
 
 namespace CrawlCenter.Data.Models {
     /// <summary>
@@ -40,5 +42,15 @@ namespace CrawlCenter.Data.Models {
         /// 执行命令
         /// </summary>
         public string Cmd { get; set; }
+        
+        /// <summary>
+        /// 创建这个爬虫的用户
+        /// </summary>
+        public User User { get; set; }
+        
+        /// <summary>
+        /// 用户ID
+        /// </summary>
+        public Guid? UserId { get; set; }
     }
 }
