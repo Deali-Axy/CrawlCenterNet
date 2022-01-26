@@ -26,14 +26,14 @@ public class ProjectTagController : ControllerBase {
 
     [HttpGet]
     public ActionResult<List<ProjectTag>> GetAll() {
-        return _tagRepo.Select
+        return _tagRepo
             .Where(a => a.UserId == User.Identity.Name)
             .ToList();
     }
 
     [HttpGet("{id}")]
     public ActionResult<ProjectTag> Get(string id) {
-        var tag = _tagRepo.Select.Where(a => a.Id == id).ToOne();
+        var tag = _tagRepo.Where(a => a.Id == id).ToOne();
         if (tag == null) return NotFound();
         if (tag.UserId != User.Identity?.Name) return Unauthorized(new { msg = "这不是你创建的项目标签！" });
         return tag;
@@ -49,7 +49,7 @@ public class ProjectTagController : ControllerBase {
 
     [HttpPut("{id}")]
     public ActionResult<ProjectTag> Update(string id, ProjectTagEditDto dto) {
-        var tag = _tagRepo.Select.Where(a => a.Id == id).ToOne();
+        var tag = _tagRepo.Where(a => a.Id == id).ToOne();
         if (tag == null) return NotFound();
         if (tag.UserId != User.Identity?.Name) return Unauthorized(new { msg = "这不是你创建的项目标签！" });
         tag = _mapper.Map<ProjectTag>(dto);
@@ -59,7 +59,7 @@ public class ProjectTagController : ControllerBase {
 
     [HttpDelete("{id}")]
     public IActionResult Delete(string id) {
-        var tag = _tagRepo.Select.Where(a => a.Id == id).ToOne();
+        var tag = _tagRepo.Where(a => a.Id == id).ToOne();
         if (tag == null) return NotFound();
         if (tag.UserId != User.Identity?.Name) return Unauthorized(new { msg = "这不是你创建的项目标签！" });
         var ar = _tagRepo.Delete(tag);
