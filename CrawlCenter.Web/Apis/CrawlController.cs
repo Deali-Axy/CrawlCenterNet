@@ -52,7 +52,7 @@ public class CrawlController : ControllerBase {
     /// <returns></returns>
     [HttpGet]
     public ActionResult<List<CrawlTask>> GetAll() {
-        return _crawlRepo.Select
+        return _crawlRepo
             .Where(a => a.UserId == User.Identity.Name)
             .ToList();
     }
@@ -64,9 +64,9 @@ public class CrawlController : ControllerBase {
     /// <returns></returns>
     [HttpGet("{id}")]
     public ActionResult<CrawlTask> Get(string id) {
-        var crawl = _crawlRepo.Select.Where(a => a.Id == id).ToOne();
+        var crawl = _crawlRepo.Where(a => a.Id == id).ToOne();
         if (crawl == null) return NotFound();
-        if (crawl.UserId != User.Identity?.Name) return Unauthorized(new {msg = "这不是你的爬虫！"});
+        if (crawl.UserId != User.Identity?.Name) return Unauthorized(new { msg = "这不是你的爬虫！" });
         return crawl;
     }
 
@@ -76,15 +76,15 @@ public class CrawlController : ControllerBase {
     /// <returns></returns>
     [HttpPut("{id}")]
     public ActionResult<CrawlTask> Update(string id, CrawlTaskEditDto dto) {
-        var crawl = _crawlRepo.Select.Where(a => a.Id == id).ToOne();
+        var crawl = _crawlRepo.Where(a => a.Id == id).ToOne();
         if (crawl == null) return NotFound();
-        if (crawl.UserId != User.Identity?.Name) return Unauthorized(new {msg = "这不是你的爬虫！"});
+        if (crawl.UserId != User.Identity?.Name) return Unauthorized(new { msg = "这不是你的爬虫！" });
         if (!ModelState.IsValid) return BadRequest();
 
         crawl = _mapper.Map<CrawlTask>(dto);
         var affectRows = _crawlRepo.Update(crawl);
 
-        return affectRows > 0 ? crawl : BadRequest(new {msg = "写入数据库失败"});
+        return affectRows > 0 ? crawl : BadRequest(new { msg = "写入数据库失败" });
     }
 
     /// <summary>
@@ -94,12 +94,12 @@ public class CrawlController : ControllerBase {
     /// <returns></returns>
     [HttpDelete("{id}")]
     public IActionResult Delete(string id) {
-        var crawl = _crawlRepo.Select.Where(a => a.Id == id).ToOne();
+        var crawl = _crawlRepo.Where(a => a.Id == id).ToOne();
         if (crawl == null) return NotFound();
-        if (crawl.UserId != User.Identity?.Name) return Unauthorized(new {msg = "这不是你的爬虫！"});
+        if (crawl.UserId != User.Identity?.Name) return Unauthorized(new { msg = "这不是你的爬虫！" });
         var affectRows = _crawlRepo.Delete(crawl);
         return affectRows > 0
-            ? Ok(new {msg = "删除成功"})
-            : BadRequest(new {msg = "删除数据失败"});
+            ? Ok(new { msg = "删除成功" })
+            : BadRequest(new { msg = "删除数据失败" });
     }
 }
