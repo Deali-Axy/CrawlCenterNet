@@ -46,7 +46,11 @@ public class AuthService {
     }
 
     public User GetUser(string userId) {
-        return _userRepo.Select.Where(a => a.Id == userId).ToOne();
+        return _userRepo.Where(a => a.Id == userId).ToOne();
+    }
+
+    public User GetUserByName(string name) {
+        return _userRepo.Where(a => a.Name == name).ToOne();
     }
 
     public User GetUser(ClaimsPrincipal user) {

@@ -28,7 +28,7 @@ public class AuthController : ControllerBase {
     /// <returns></returns>
     [HttpPost]
     public ActionResult<LoginToken> Login(LoginUser loginUser) {
-        var user = _authService.GetUser(loginUser.Username);
+        var user = _authService.GetUserByName(loginUser.Username);
         if (user == null) return NotFound();
 
         var md5Pwd = loginUser.Password.MDString();
